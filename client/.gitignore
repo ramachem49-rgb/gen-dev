@@ -8,10 +8,6 @@ yarn-error.log
 .env.local
 .env.production
 
-# Build files
-dist/
-build/
-*.tgz
 
 # IDE
 .vscode/
