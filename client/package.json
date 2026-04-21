@@ -91,3 +91,9 @@
     "vitest": "^3.2.4"
   }
 }
+
+{
+  "scripts": {
+    "build": "cd client && npm install && npm run build"
+  }
+}
