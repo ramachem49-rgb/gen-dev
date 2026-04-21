@@ -10,9 +10,9 @@ import PageTransition from "@/components/PageTransition";
 // Level Data
 const levels = [
   { id: "all", label: "ទាំងអស់", icon: Layers },
-  { id: "beginner", label: "ឋានកម្រិតដើម", icon: Sparkles },
-  { id: "intermediate", label: "មធ្យម", icon: BookOpen },
-  { id: "advanced", label: "កម្រិតខ្ពស់", icon: BookOpen },
+  { id: "ថ្នាក់ដើម", label: "ថ្នាក់ដើម", icon: Sparkles },
+  { id: "មធ្យម", label: "មធ្យម", icon: BookOpen },
+  { id: "កម្រិតខ្ពស់", label: "កម្រិតខ្ពស់", icon: BookOpen },
 ];
 
 const Lessons = () => {
@@ -26,7 +26,8 @@ const Lessons = () => {
     .filter((l) =>
       search === "" ||
       l.title.toLowerCase().includes(search.toLowerCase()) ||
-      l.slug.toLowerCase().includes(search.toLowerCase())
+      l.slug.toLowerCase().includes(search.toLowerCase()) ||
+      l.category.toLowerCase().includes(search.toLowerCase())
     );
 
   return (

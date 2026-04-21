@@ -1,8 +1,14 @@
 const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const router = express.Router();
 const cloneDetector = require('../middleware/cloneDetector');
-const databaseAntiClone = require('../security/databaseAntiClone');
-const sourceCodeProtection = require('../middleware/sourceCodeProtection');
+
+// Lazy-load optional modules to avoid crash if missing
+let databaseAntiClone = null;
+let sourceCodeProtection = null;
+try { databaseAntiClone = require('../../database/security/databaseAntiClone'); } catch (e) { /* optional */ }
+try { sourceCodeProtection = require('../middleware/sourceCodeProtection'); } catch (e) { /* optional */ }
 
 // Endpoint សម្រាប់ beacon
 router.post('/security/clone-detected', (req, res) => {

@@ -1,0 +1,36 @@
+[2026-04-13T13:25:51.358Z] TypeError: path.join is not a function
+[2026-04-14T12:40:32.530Z] TypeError: path.join is not a function
+[2026-04-15T13:16:14.810Z] TypeError: path.join is not a function
+[2026-04-15T13:41:43.320Z] ReferenceError: geoip is not defined
+[2026-04-15T13:43:39.216Z] ReferenceError: geoip is not defined
+[2026-04-15T13:47:53.185Z] ReferenceError: geoip is not defined
+[2026-04-15T14:19:48.296Z] ReferenceError: geoip is not defined
+[2026-04-15T18:28:22.719Z] TypeError: path.join is not a function
+[2026-04-15T19:28:23.670Z] TypeError: path.join is not a function
+[2026-04-15T19:28:24.286Z] TypeError: path.join is not a function
+[2026-04-15T20:31:46.233Z] ReferenceError: geoip is not defined
+[2026-04-15T20:32:30.983Z] ReferenceError: geoip is not defined
+[2026-04-15T20:37:45.584Z] ReferenceError: geoip is not defined
+[2026-04-15T20:37:45.594Z] ReferenceError: geoip is not defined
+[2026-04-15T20:47:02.928Z] ReferenceError: geoip is not defined
+[2026-04-15T20:48:30.743Z] ReferenceError: geoip is not defined
+[2026-04-15T20:52:23.169Z] ReferenceError: geoip is not defined
+[2026-04-15T20:53:01.350Z] ReferenceError: geoip is not defined
+[2026-04-15T21:14:01.274Z] ReferenceError: geoip is not defined
+[2026-04-15T21:19:21.605Z] ReferenceError: geoip is not defined
+[2026-04-15T21:21:16.009Z] ReferenceError: geoip is not defined
+[2026-04-15T21:21:37.159Z] ReferenceError: geoip is not defined
+[2026-04-15T21:38:53.896Z] ReferenceError: geoip is not defined
+[2026-04-15T21:40:02.050Z] ReferenceError: geoip is not defined
+[2026-04-15T21:40:50.240Z] ReferenceError: geoip is not defined
+[2026-04-16T13:20:29.543Z] TypeError: path.join is not a function
+[2026-04-16T19:57:42.619Z] ReferenceError: geoip is not defined
+[2026-04-16T19:57:56.397Z] ReferenceError: geoip is not defined
+[2026-04-16T21:01:11.298Z] TypeError: path.join is not a function
+[2026-04-16T22:01:10.710Z] TypeError: path.join is not a function
+[2026-04-16T22:01:11.177Z] TypeError: path.join is not a function
+[2026-04-16T23:01:10.722Z] TypeError: path.join is not a function
+[2026-04-16T23:01:11.196Z] TypeError: path.join is not a function
+[2026-04-19T01:11:08.373Z] TypeError: path.join is not a function
+[2026-04-19T02:11:08.005Z] TypeError: path.join is not a function
+[2026-04-19T02:11:08.486Z] TypeError: path.join is not a function

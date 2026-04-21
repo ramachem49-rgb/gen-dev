@@ -2,7 +2,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const alertSystem = require('../monitoring/alerts/notification');
+const alertSystem = require('../utils/alertSystem');
 
 class CloneDetector {
   constructor() {

@@ -1,0 +1,4291 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<title>Genz Dev</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117;
+  --bg-secondary: #161b22;
+  --sidebar: #0d1117;
+  --editor: #0d1117;
+  --topbar: #161b22;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #7d8590;
+  --primary: #58a6ff;
+  --primary-glow: rgba(88, 166, 255, 0.15);
+  --accent: #3fb950;
+  --accent-glow: rgba(63, 185, 80, 0.15);
+  --warning: #d29922;
+  --error: #f85149;
+  --card: #21262d;
+  --hover: rgba(255, 255, 255, 0.06);
+  --tab-active: #0d1117;
+  --tab-inactive: #161b22;
+  --line-highlight: rgba(255, 255, 255, 0.03);
+  --selection: rgba(56, 139, 253, 0.4);
+  --scrollbar: #30363d;
+  --scrollbar-hover: #484f58;
+  --syntax-keyword: #ff7b72;
+  --syntax-string: #a5d6ff;
+  --syntax-number: #79c0ff;
+  --syntax-comment: #8b949e;
+  --syntax-function: #d2a8ff;
+  --syntax-variable: #ffa657;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-hover); }
+
+/* Activity Bar */
+#actbar {
+  width: 48px;
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  gap: 4px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  position: relative;
+  z-index: 10;
+}
+
+.act {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  border: none;
+  background: transparent;
+}
+
+.act::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 0;
+  background: var(--primary);
+  border-radius: 0 2px 2px 0;
+  transition: height 0.2s ease;
+}
+
+.act:hover {
+  color: var(--text);
+  background: var(--hover);
+}
+
+.act.active {
+  color: var(--text);
+  background: var(--hover);
+}
+
+.act.active::before {
+  height: 24px;
+}
+
+.act svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.act:hover svg {
+  transform: scale(1.1);
+}
+
+/* Layout */
+#layout {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+#sidebar {
+  width: 240px;
+  background: var(--sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+
+#sidebar.hidden {
+  width: 0;
+  opacity: 0;
+  border-right: none;
+}
+
+#main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Titlebar */
+#titlebar {
+  background: linear-gradient(90deg, #0d1117 0%, #0f1923 50%, #0d1117 100%);
+  height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 6px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(0,255,170,.15);
+  position: relative;
+  -webkit-app-region: drag;
+}
+
+/* Cyber bottom line glow */
+#titlebar::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,255,170,.5), rgba(0,180,255,.5), transparent);
+}
+
+#titlebar .title {
+  font-size: 13px;
+  font-weight: 700;
+  flex: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 1px;
+  -webkit-app-region: drag;
+}
+
+#titlebar .title .brand-logo {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  object-fit: cover;
+  border: 1px solid rgba(0,255,170,.25);
+  box-shadow: 0 0 6px rgba(0,255,170,.15);
+  flex-shrink: 0;
+}
+
+#titlebar .title .brand-name {
+  background: linear-gradient(90deg, #00ffaa, #00b4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+}
+
+.tbtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+
+.tbtn:hover {
+  background: rgba(0,255,170,.08);
+  color: #00ffaa;
+  box-shadow: 0 0 8px rgba(0,255,170,.15);
+}
+
+.tbtn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Editor tabs */
+#editor-tabs {
+  display: flex;
+  background: var(--tab-inactive);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#editor-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.etab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--tab-inactive);
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 100px;
+  max-width: 200px;
+  transition: all 0.15s ease;
+  position: relative;
+  font-family: inherit;
+}
+
+.etab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.etab:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+.etab.active {
+  background: var(--tab-active);
+  color: var(--text);
+}
+
+.etab.active::after {
+  background: var(--primary);
+}
+
+.etab .file-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.etab .file-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.etab .modified-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--warning);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.etab.modified .modified-dot {
+  opacity: 1;
+}
+
+.etab .close-btn {
+  opacity: 0;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.etab:hover .close-btn,
+.etab.active .close-btn {
+  opacity: 1;
+}
+
+.etab .close-btn:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+
+/* Editor */
+#editor-area {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+}
+
+#editor-container {
+  display: none;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+#editor-container.active {
+  display: flex;
+}
+
+.line-numbers {
+  padding: 16px 0;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  user-select: none;
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-muted);
+  min-width: 50px;
+  overflow: hidden;
+}
+
+.line-numbers .line-num {
+  padding: 0 12px;
+  height: 22px;
+  transition: color 0.15s ease;
+}
+
+.line-numbers .line-num.active {
+  color: var(--text);
+}
+
+#editor {
+  flex: 1;
+  background: var(--editor);
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  resize: none;
+  padding: 16px;
+  line-height: 1.7;
+  tab-size: 2;
+  white-space: pre;
+  overflow: auto;
+  caret-color: var(--primary);
+}
+
+#editor::selection {
+  background: var(--selection);
+}
+
+/* ── Welcome Screen — Cyber/Code Theme ──────────────────────────────────── */
+#no-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  flex: 1;
+  gap: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: var(--editor);
+}
+
+/* Subtle dot grid — very light */
+#no-file::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(0,255,170,.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+#no-file > * { position: relative; z-index: 1; }
+
+/* Logo icon */
+#no-file .welcome-icon {
+  width: 76px;
+  height: 76px;
+  background: linear-gradient(135deg, rgba(0,255,170,.1), rgba(0,180,255,.1));
+  border: 1px solid rgba(0,255,170,.35);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: cyberFloat 3.5s ease-in-out infinite;
+  box-shadow: 0 0 30px rgba(0,255,170,.12);
+}
+@keyframes cyberFloat {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-7px); }
+}
+#no-file .welcome-icon svg {
+  width: 36px;
+  height: 36px;
+  color: #00ffaa;
+  filter: drop-shadow(0 0 8px rgba(0,255,170,.6));
+}
+
+/* Title */
+#no-file .welcome-title-wrap { display: flex; flex-direction: column; gap: 6px; }
+
+#no-file h2 {
+  font-size: 26px;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #00ffaa 0%, #00d4ff 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+#no-file .welcome-tagline {
+  font-size: 10px;
+  color: rgba(0,255,170,.5);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+#no-file .welcome-sub {
+  font-size: 13px;
+  max-width: 320px;
+  line-height: 1.8;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+  background: rgba(0,255,170,.04);
+  border: 1px solid rgba(0,255,170,.1);
+  border-radius: 8px;
+  padding: 10px 16px;
+}
+#no-file .welcome-sub::before { content: '// '; color: rgba(0,255,170,.35); }
+
+/* Buttons */
+#no-file .welcome-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#no-file .welcome-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+  transition: all .2s;
+  border: 1px solid rgba(0,255,170,.45);
+  background: rgba(0,255,170,.07);
+  color: #00ffaa;
+  letter-spacing: .5px;
+  font-weight: 600;
+}
+#no-file .welcome-btn:hover {
+  border-color: #00ffaa;
+  background: rgba(0,255,170,.14);
+  box-shadow: 0 0 18px rgba(0,255,170,.25);
+  transform: translateY(-2px);
+}
+#no-file .welcome-btn.secondary {
+  border-color: rgba(0,180,255,.4);
+  background: rgba(0,180,255,.07);
+  color: #38bdf8;
+}
+#no-file .welcome-btn.secondary:hover {
+  border-color: #38bdf8;
+  background: rgba(0,180,255,.14);
+  box-shadow: 0 0 18px rgba(0,180,255,.25);
+}
+
+/* Language badges */
+#no-file .welcome-langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  max-width: 400px;
+}
+#no-file .lang-badge {
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 5px;
+  background: rgba(0,255,170,.05);
+  border: 1px solid rgba(0,255,170,.18);
+  color: rgba(0,255,170,.65);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: .5px;
+  transition: all .15s;
+  cursor: default;
+  font-weight: 500;
+}
+#no-file .lang-badge:hover {
+  border-color: rgba(0,255,170,.5);
+  color: #00ffaa;
+  background: rgba(0,255,170,.1);
+}
+
+/* Terminal panel */
+#term-panel {
+  height: 220px;
+  border-top: 1px solid rgba(0,255,170,.15);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  background: #0a0e1a;
+  min-height: 36px;
+  max-height: 80vh;
+  position: relative;
+}
+
+#term-panel.collapsed {
+  height: 36px !important;
+}
+
+/* Resize handle */
+#term-resize-handle {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  cursor: ns-resize;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#term-resize-handle:hover .resize-bar,
+#term-resize-handle.dragging .resize-bar {
+  background: var(--primary);
+  opacity: 1;
+}
+.resize-bar {
+  width: 40px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+  opacity: 0.5;
+  transition: background .15s, opacity .15s;
+  pointer-events: none;
+}
+
+#term-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  background: linear-gradient(90deg, rgba(0,15,10,.95), rgba(0,20,15,.95));
+  border-bottom: 1px solid rgba(0,255,170,.12);
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  height: 34px;
+}
+
+#term-header .term-tabs {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+}
+
+.term-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: 6px;
+}
+
+.term-act-btn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 3px 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: all .15s;
+}
+.term-act-btn:hover { background: rgba(255,255,255,.08); color: #e2e8f0; }
+.term-act-btn.danger { color: #f87171; }
+.term-act-btn.danger:hover { background: rgba(248,113,113,.15); color: #fca5a5; }
+
+/* Multiple terminal instances */
+.term-instance { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+.term-instance.active { display: flex; }
+.term-output { flex: 1; overflow-y: auto; padding: 8px 14px; line-height: 1.65; font-size: 13px; }
+.term-input-row { display: flex; align-items: center; gap: 6px; padding: 4px 14px; flex-shrink: 0; }
+.term-prompt { color: var(--accent); white-space: nowrap; font-size: 13px; user-select: none; }
+.term-input { flex: 1; background: transparent; border: none; outline: none; color: var(--text); font-family: var(--mono); font-size: 13px; caret-color: var(--accent); min-height: 1.4em; white-space: pre; overflow: hidden; word-break: break-all; cursor: text; }
+.term-input:empty::before { content: ''; display: inline-block; }
+/* Remove autofill CSS since we no longer use <input> */
+
+.ttab {
+  padding: 4px 12px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.ttab.active {
+  background: rgba(0,255,170,.1);
+  color: #00ffaa;
+  border: 1px solid rgba(0,255,170,.25);
+}
+
+.ttab:hover:not(.active) {
+  background: rgba(255,255,255,.05);
+  color: var(--text);
+}
+
+#term-header .toggle-icon {
+  color: rgba(0,255,170,.4);
+  transition: transform 0.3s ease;
+}
+
+#term-panel.collapsed #term-header .toggle-icon {
+  transform: rotate(180deg);
+}
+
+#term-body {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #0a0e1a;
+}
+
+#tout {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 14px;
+  line-height: 1.65;
+  font-size: 12.5px;
+  font-family: 'JetBrains Mono', monospace;
+  background: #0a0e1a;
+}
+
+.ln {
+  white-space: pre-wrap;
+  word-break: break-word;
+  padding: 1px 0;
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-2px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ln.cmd     { color: #00ffaa; font-weight: 600; }
+.ln.err     { color: #ff5f57; }
+.ln.info    { color: #38bdf8; }
+.ln.dim     { color: #94a3b8; }
+.ln.out     { color: #f1f5f9; }
+.ln.warn    { color: #fbbf24; }
+.ln.success { color: #00ffaa; font-weight: 500; }
+
+#tinrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  flex-shrink: 0;
+  background: #0d1117;
+  border-top: 1px solid rgba(0,255,170,.12);
+}
+
+#tprompt {
+  color: #00ffaa;
+  white-space: nowrap;
+  font-size: 12px;
+  user-select: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+}
+
+#tinput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  caret-color: #00ffaa;
+}
+
+/* Sidebar panels */
+#sidebar-header {
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+#sidebar-header .actions {
+  display: flex;
+  gap: 2px;
+}
+
+.sh-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sh-btn:hover {
+  color: var(--text);
+  background: var(--hover);
+}
+
+.sh-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+#file-tree {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.ti {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.ti::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--primary-glow);
+  transition: width 0.15s ease;
+}
+
+.ti:hover {
+  color: var(--text);
+  background: var(--hover);
+}
+
+.ti:hover::before {
+  width: 3px;
+}
+
+.ti.sel {
+  color: var(--text);
+  background: var(--primary-glow);
+}
+
+.ti.sel::before {
+  width: 3px;
+  background: var(--primary);
+}
+
+.ti .ic {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ti .nm {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ti .acts {
+  display: none;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.ti:hover .acts {
+  display: flex;
+}
+
+.ti .acts button {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.ti .acts button:hover {
+  color: var(--text);
+  background: var(--hover);
+}
+
+/* Status bar */
+#statusbar {
+  height: 24px;
+  background: linear-gradient(90deg, rgba(0,20,15,.95), rgba(0,30,25,.95));
+  border-top: 1px solid rgba(0,255,170,.2);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 12px;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.sb-item {
+  color: rgba(0,255,170,.7);
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sb-item:hover {
+  background: rgba(0,255,170,.1);
+  color: #00ffaa;
+}
+
+.sb-item svg {
+  width: 12px;
+  height: 12px;
+}
+
+#sb-lang {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 10px;
+  border-radius: 10px;
+}
+
+/* Context menu */
+#ctx {
+  position: fixed;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 0;
+  z-index: 999;
+  min-width: 180px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: ctxFade 0.15s ease;
+}
+
+@keyframes ctxFade {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.ctx-item {
+  padding: 8px 16px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.1s ease;
+}
+
+.ctx-item:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.ctx-item svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ctx-sep {
+  height: 1px;
+  background: var(--border);
+  margin: 6px 0;
+}
+
+/* Notifications */
+#notifications {
+  position: fixed;
+  bottom: 40px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.notification {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: notifyIn 0.3s ease;
+  pointer-events: auto;
+  max-width: 320px;
+}
+
+@keyframes notifyIn {
+  from { opacity: 0; transform: translateX(100%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.notification.leaving {
+  animation: notifyOut 0.3s ease forwards;
+}
+
+@keyframes notifyOut {
+  to { opacity: 0; transform: translateX(100%); }
+}
+
+.notification svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.notification.success svg { color: var(--accent); }
+.notification.error svg { color: var(--error); }
+.notification.info svg { color: var(--primary); }
+
+.notification span {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* ── Responsive / Mobile ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #sidebar {
+    position: absolute;
+    left: 48px;
+    top: 36px;
+    bottom: 24px;
+    z-index: 100;
+    box-shadow: 4px 0 16px rgba(0,0,0,.4);
+    width: 220px;
+  }
+  #sidebar.hidden { left: -300px; opacity: 0; }
+  #term-panel { height: 200px; }
+  #editor { font-size: 12px; padding: 10px; }
+  .etab { min-width: 80px; padding: 6px 10px; font-size: 11px; }
+  #titlebar { padding: 0 8px; gap: 4px; }
+  .tbtn { padding: 4px 6px; }
+}
+
+/* ── Portrait phone — show rotate prompt ─────────────────────────────────── */
+@media (max-width: 600px) and (orientation: portrait) {
+  #rotate-prompt { display: flex !important; }
+  #layout, #titlebar, #statusbar { filter: blur(3px); pointer-events: none; }
+}
+
+/* ── Landscape phone — optimized layout ──────────────────────────────────── */
+@media (max-width: 900px) and (orientation: landscape) {
+  #rotate-prompt { display: none !important; }
+  #sidebar { width: 180px; }
+  #term-panel { height: 160px; }
+  #titlebar { height: 30px; }
+  #editor { font-size: 12px; }
+  #statusbar { height: 20px; font-size: 10px; }
+  .ttab { font-size: 10px; padding: 3px 8px; }
+}
+
+/* ── Rotate prompt overlay ───────────────────────────────────────────────── */
+#rotate-prompt {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(13,17,23,.97);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding: 32px;
+}
+#rotate-prompt .rotate-icon {
+  font-size: 64px;
+  animation: rotateAnim 2s ease-in-out infinite;
+}
+@keyframes rotateAnim {
+  0%,100% { transform: rotate(0deg); }
+  40%      { transform: rotate(90deg); }
+  60%      { transform: rotate(90deg); }
+}
+#rotate-prompt h2 { font-size: 20px; font-weight: 700; color: var(--text); margin: 0; }
+#rotate-prompt p  { font-size: 13px; color: var(--text-muted); margin: 0; max-width: 260px; line-height: 1.5; }
+#rotate-prompt .skip-btn {
+  margin-top: 8px;
+  padding: 8px 20px;
+  background: var(--primary-glow);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  color: var(--primary);
+  font-size: 12px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ── Fullscreen button ───────────────────────────────────────────────────── */
+#fullscreen-btn {
+  display: none;
+}
+@media (max-width: 900px) {
+  #fullscreen-btn { display: flex; }
+}
+#fullscreen-btn.is-fullscreen svg.icon-expand { display: none; }
+#fullscreen-btn.is-fullscreen svg.icon-compress { display: block !important; }
+
+/* Focus visible */
+*:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+button:focus-visible, .etab:focus-visible, .ti:focus-visible {
+  outline: 2px solid var(--primary); outline-offset: -2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Editor focus indicator */
+#editor:focus {
+  outline: none;
+  caret-color: #00ffaa;
+}
+
+#editor-area:focus-within {
+  box-shadow: inset 0 0 0 2px rgba(0, 255, 170, 0.3);
+  border-radius: 6px;
+}
+
+#editor-container.active {
+  position: relative;
+}
+</style>
+</head>
+<body>
+
+<!-- Rotate prompt (portrait mobile) -->
+<div id="rotate-prompt" role="dialog" aria-label="Please rotate your device">
+  <div class="rotate-icon">📱</div>
+  <h2>សូមផ្ដេកទូរស័ព្ទ</h2>
+  <p>Genz Dev Lab ដំណើរការល្អបំផុតនៅពេលផ្ដេក។ សូមបង្វិលទូរស័ព្ទរបស់អ្នកទៅផ្នែកខាងស្ដាំ។</p>
+  <button class="skip-btn" onclick="dismissRotate()">បន្តដោយមិនផ្ដេក →</button>
+</div>
+
+<!-- Titlebar -->
+<div id="titlebar">
+  <button class="tbtn" onclick="toggleSidebar()" aria-label="Toggle sidebar" style="-webkit-app-region:no-drag">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+  </button>
+  <span class="title">
+    <img class="brand-logo"
+      src="https://i.pinimg.com/736x/03/97/93/039793a02bd13ec2baabc23fd9a9dc57.jpg"
+      alt="Genz Dev"/>
+    <span class="brand-name">GENZ DEV</span>
+  </span>
+  <button class="tbtn" onclick="showBgPicker()" aria-label="Change background" title="Background" style="-webkit-app-region:no-drag">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+  </button>
+  <button class="tbtn" onclick="resetFS()" aria-label="Reset filesystem" title="Reset all files" style="-webkit-app-region:no-drag">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+  </button>
+  <button class="tbtn" onclick="activeTab ? _downloadPath(activeTab) : _exportWorkspace()" aria-label="Download file" title="ទាញយកឯកសារ / Export Workspace" style="-webkit-app-region:no-drag">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  </button>
+  <button class="tbtn" id="fullscreen-btn" onclick="toggleFullscreen()" aria-label="Toggle fullscreen" title="Fullscreen (F11)" style="-webkit-app-region:no-drag">
+    <svg class="icon-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+    <svg class="icon-compress" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+  </button>
+  <!-- Auth button -->
+  <button class="tbtn" id="auth-btn" onclick="openAuthModal()" aria-label="Login / Profile" title="Login / Profile" style="-webkit-app-region:no-drag">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+  </button>
+</div>
+
+<div id="layout">
+  <!-- Activity bar -->
+  <div id="actbar" role="navigation" aria-label="Activity bar">
+    <button class="act active" onclick="setAct('files')" title="Explorer" id="act-files" aria-label="Files">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+    </button>
+    <button class="act" onclick="setAct('search')" title="Search" id="act-search" aria-label="Search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar" role="navigation" aria-label="Sidebar">
+    <div id="sidebar-header">
+      <span id="sidebar-title">Explorer</span>
+      <div class="actions" id="explorer-actions">
+        <button class="sh-btn" onclick="newFile()" title="New File">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15h6"/></svg>
+        </button>
+        <button class="sh-btn" onclick="newDir()" title="New Folder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11v6M9 14h6"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- Explorer panel -->
+    <div id="file-tree" role="tree"></div>
+    <!-- Search panel -->
+    <div id="search-panel" style="display:none;flex-direction:column;flex:1;overflow:hidden">
+      <div style="padding:10px 12px 6px">
+        <div style="position:relative">
+          <svg style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none"
+            width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input id="search-input" type="text" placeholder="Search in files..."
+            autocomplete="off" spellcheck="false"
+            style="width:100%;background:var(--card);border:1px solid var(--border);border-radius:6px;
+                   padding:6px 8px 6px 28px;color:var(--text);font-size:12px;font-family:inherit;outline:none"
+            oninput="doSearchDebounced(this.value)"
+            onkeydown="if(event.key==='Enter'){clearTimeout(_searchTimer);doSearch(this.value);}"
+            onfocus="this.style.borderColor='var(--primary)'"
+            onblur="this.style.borderColor='var(--border)'"/>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+          <label style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);cursor:pointer">
+            <input type="checkbox" id="search-case" onchange="doSearch(document.getElementById('search-input').value)"
+              style="accent-color:var(--primary);cursor:pointer"/> Aa
+          </label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);cursor:pointer">
+            <input type="checkbox" id="search-regex" onchange="doSearch(document.getElementById('search-input').value)"
+              style="accent-color:var(--primary);cursor:pointer"/> .*
+          </label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text-muted);cursor:pointer">
+            <input type="checkbox" id="search-word" onchange="doSearch(document.getElementById('search-input').value)"
+              style="accent-color:var(--primary);cursor:pointer"/> \b
+          </label>
+          <span id="search-count" style="margin-left:auto;font-size:10px;color:var(--text-muted)"></span>
+        </div>
+      </div>
+      <div id="search-results" style="flex:1;overflow-y:auto;padding:4px 0"></div>
+    </div>
+  </div>
+
+  <!-- Main area -->
+  <div id="main-area">
+    <!-- Editor tabs -->
+    <div id="editor-tabs" role="tablist"></div>
+
+    <!-- Editor -->
+    <div id="editor-area" onclick="if(activeTab && document.activeElement !== document.getElementById('editor')) document.getElementById('editor').focus()">
+      <div id="no-file">
+        <div class="welcome-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="welcome-title-wrap">
+          <h2>Genz Dev</h2>
+          <span class="welcome-tagline">កម្ពុជា · មន្ទីរពិសោធន៍កូដ</span>
+        </div>
+        <p class="welcome-sub">បើកឯកសារពី Explorer ឬបង្កើតឯកសារថ្មី ដើម្បីចាប់ផ្ដើមសរសេរកូដ</p>
+        <div class="welcome-actions">
+          <button class="welcome-btn" onclick="newFile()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            Ctrl+N ឯកសារថ្មី
+          </button>
+          <button class="welcome-btn secondary" onclick="openFile('/workspace/hello.js')">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            បើក hello.js
+          </button>
+        </div>
+        <div class="welcome-langs">
+          <span class="lang-badge">JS</span><span class="lang-badge">TS</span>
+          <span class="lang-badge">Python</span><span class="lang-badge">C</span>
+          <span class="lang-badge">C++</span><span class="lang-badge">Java</span>
+          <span class="lang-badge">Go</span><span class="lang-badge">Rust</span>
+          <span class="lang-badge">PHP</span><span class="lang-badge">Ruby</span>
+          <span class="lang-badge">Kotlin</span><span class="lang-badge">Swift</span>
+          <span class="lang-badge">Bash</span><span class="lang-badge">SQL</span>
+        </div>
+      </div>
+
+      <!-- Find / Replace Widget -->
+      <div id="find-widget" style="display:none;position:absolute;top:4px;right:12px;z-index:50;
+        background:var(--card);border:1px solid var(--border);border-radius:8px;
+        box-shadow:0 4px 20px rgba(0,0,0,.4);padding:8px 10px;min-width:320px;max-width:420px;
+        font-size:12px;font-family:'JetBrains Mono',monospace">
+        <!-- Find row -->
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+          <div style="position:relative;flex:1">
+            <input id="fw-find" type="text" placeholder="Find" autocomplete="off"
+              style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:5px;
+                     padding:4px 28px 4px 8px;color:var(--text);font-size:12px;font-family:inherit;outline:none"
+              oninput="fwSearchDebounced()" onkeydown="fwKeydown(event)"/>
+            <span id="fw-count" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);
+              font-size:10px;color:var(--text-muted);pointer-events:none;white-space:nowrap"></span>
+          </div>
+          <!-- Options -->
+          <button id="fw-btn-case" onclick="fwToggle('case')" title="Match Case (Alt+C)"
+            class="fw-opt" style="background:transparent;border:1px solid transparent;border-radius:4px;
+            padding:3px 6px;cursor:pointer;color:var(--text-muted);font-size:11px;font-family:inherit">Aa</button>
+          <button id="fw-btn-word" onclick="fwToggle('word')" title="Whole Word (Alt+W)"
+            class="fw-opt" style="background:transparent;border:1px solid transparent;border-radius:4px;
+            padding:3px 6px;cursor:pointer;color:var(--text-muted);font-size:11px;font-family:inherit">\b</button>
+          <button id="fw-btn-regex" onclick="fwToggle('regex')" title="Use Regex (Alt+R)"
+            class="fw-opt" style="background:transparent;border:1px solid transparent;border-radius:4px;
+            padding:3px 6px;cursor:pointer;color:var(--text-muted);font-size:11px;font-family:inherit">.*</button>
+          <!-- Nav -->
+          <button onclick="fwPrev()" title="Previous (Shift+Enter)" style="background:transparent;border:none;
+            color:var(--text-muted);cursor:pointer;padding:3px 5px;border-radius:4px;display:flex;align-items:center"
+            onmouseover="this.style.background='var(--hover)'" onmouseout="this.style.background='transparent'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+          </button>
+          <button onclick="fwNext()" title="Next (Enter)" style="background:transparent;border:none;
+            color:var(--text-muted);cursor:pointer;padding:3px 5px;border-radius:4px;display:flex;align-items:center"
+            onmouseover="this.style.background='var(--hover)'" onmouseout="this.style.background='transparent'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <button onclick="fwClose()" title="Close (Escape)" style="background:transparent;border:none;
+            color:var(--text-muted);cursor:pointer;padding:3px 5px;border-radius:4px;display:flex;align-items:center"
+            onmouseover="this.style.background='var(--hover)'" onmouseout="this.style.background='transparent'">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <!-- Replace row (shown when Ctrl+H) -->
+        <div id="fw-replace-row" style="display:none;align-items:center;gap:6px">
+          <input id="fw-replace" type="text" placeholder="Replace" autocomplete="off"
+            style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:5px;
+                   padding:4px 8px;color:var(--text);font-size:12px;font-family:inherit;outline:none"
+            onkeydown="fwReplaceKeydown(event)"/>
+          <button onclick="fwReplaceOne()" title="Replace (Enter)"
+            style="background:var(--hover);border:1px solid var(--border);border-radius:5px;
+            padding:3px 8px;cursor:pointer;color:var(--text);font-size:11px;font-family:inherit;white-space:nowrap"
+            onmouseover="this.style.background='rgba(0,255,170,.1)'" onmouseout="this.style.background='var(--hover)'">Replace</button>
+          <button onclick="fwReplaceAll()" title="Replace All (Ctrl+Alt+Enter)"
+            style="background:var(--hover);border:1px solid var(--border);border-radius:5px;
+            padding:3px 8px;cursor:pointer;color:var(--text);font-size:11px;font-family:inherit;white-space:nowrap"
+            onmouseover="this.style.background='rgba(0,255,170,.1)'" onmouseout="this.style.background='var(--hover)'">All</button>
+        </div>
+      </div>
+
+      <!-- Go to Line Widget -->
+      <div id="goto-widget" style="display:none;position:absolute;top:4px;right:12px;z-index:50;
+        background:var(--card);border:1px solid var(--border);border-radius:8px;
+        box-shadow:0 4px 20px rgba(0,0,0,.4);padding:8px 10px;width:240px;font-size:12px">
+        <div style="display:flex;align-items:center;gap:6px">
+          <input id="goto-input" type="number" min="1" placeholder="Go to line..."
+            style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:5px;
+                   padding:4px 8px;color:var(--text);font-size:12px;font-family:'JetBrains Mono',monospace;outline:none"
+            onkeydown="gotoKeydown(event)" oninput="gotoPreview(this.value)"/>
+          <span id="goto-info" style="font-size:10px;color:var(--text-muted);white-space:nowrap"></span>
+          <button onclick="gotoClose()" style="background:transparent;border:none;color:var(--text-muted);
+            cursor:pointer;padding:2px;display:flex;align-items:center">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="editor-container">
+        <div class="line-numbers" id="line-nums"></div>
+        <textarea id="editor" spellcheck="false" autocomplete="off"></textarea>
+      </div>
+    </div>
+
+    <!-- Terminal -->
+    <div id="term-panel">
+      <div id="term-resize-handle" title="Drag to resize">
+        <div class="resize-bar"></div>
+      </div>
+      <div id="term-header" onclick="toggleTerm(event)">
+        <div class="term-tabs" id="term-tabs-list" onclick="event.stopPropagation()">
+          <!-- tabs rendered by JS -->
+        </div>
+        <div class="term-actions" onclick="event.stopPropagation()">
+          <!-- New Terminal -->
+          <button class="term-act-btn" onclick="addTerminal()" title="New Terminal (Ctrl+Shift+`)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <!-- Stop -->
+          <button class="term-act-btn" id="stop-btn" onclick="stopExecution()" title="Stop (Ctrl+C)" style="display:none">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </button>
+          <!-- Clear output -->
+          <button class="term-act-btn" onclick="clearActiveTerminal()" title="Clear Output">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+          <!-- Close terminal -->
+          <button class="term-act-btn danger" onclick="closeActiveTerminal()" title="Close Terminal" id="close-term-btn" style="display:none">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+          </button>
+        </div>
+        <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+      </div>
+      <div id="term-body">
+        <!-- terminal instances rendered by JS -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Status bar -->
+<div id="statusbar" role="status">
+  <span class="sb-item" onclick="toggleTerm()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+    Terminal
+  </span>
+  <span class="sb-item" id="sb-rl" onclick="openAuthModal()" title="Rate Limit — ចុចដើម្បី Login">🔓 Guest 5/5</span>
+  <span class="sb-item" id="sb-file">No file open</span>
+  <span class="sb-item" id="sb-lang">Plain Text</span>
+</div>
+
+<!-- Context menu -->
+<div id="ctx" style="display:none" role="menu"></div>
+
+<!-- Notifications -->
+<div id="notifications" aria-live="polite"></div>
+
+<!-- ── Auth Modal ──────────────────────────────────────────────────────────── -->
+<div id="auth-overlay" onclick="closeAuthModal(event)">
+  <div id="auth-modal" onclick="event.stopPropagation()">
+    <div class="am-glow-line"></div>
+    <button class="am-close" onclick="closeAuthModal()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="am-logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    </div>
+    <div class="am-brand">GENZ DEV</div>
+    <div class="am-tagline">Lab Environment</div>
+    <div class="am-tabs">
+      <button id="tab-login"    class="am-tab active" onclick="switchAuthTab('login')">Login</button>
+      <button id="tab-register" class="am-tab"        onclick="switchAuthTab('register')">Register</button>
+      <button id="tab-profile"  class="am-tab"        onclick="switchAuthTab('profile')">Profile</button>
+    </div>
+
+    <!-- Login Panel -->
+    <div id="panel-login" class="am-panel">
+      <div class="am-field">
+        <label class="am-label">Email</label>
+        <input id="li-email" type="email" class="am-input" placeholder="you@example.com"
+          autocomplete="email" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <div class="am-field">
+        <label class="am-label">Password</label>
+        <input id="li-pass" type="password" class="am-input" placeholder="••••••••"
+          autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <div id="li-err" class="am-err"></div>
+      <button id="li-btn" class="am-btn am-btn-primary" onclick="doLogin()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        Login
+      </button>
+      <div class="am-switch">មិនទាន់មានគណនី? <span onclick="switchAuthTab('register')">Register</span></div>
+    </div>
+
+    <!-- Register Panel -->
+    <div id="panel-register" class="am-panel" style="display:none">
+      <div class="am-field">
+        <label class="am-label">Name</label>
+        <input id="rg-name" type="text" class="am-input" placeholder="Your name"
+          autocomplete="name" onkeydown="if(event.key==='Enter')doRegister()"/>
+      </div>
+      <div class="am-field">
+        <label class="am-label">Email</label>
+        <input id="rg-email" type="email" class="am-input" placeholder="you@example.com"
+          autocomplete="email" onkeydown="if(event.key==='Enter')doRegister()"/>
+      </div>
+      <div class="am-field">
+        <label class="am-label">Password</label>
+        <input id="rg-pass" type="password" class="am-input" placeholder="Min 6 characters"
+          autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()"/>
+      </div>
+      <div id="rg-err" class="am-err"></div>
+      <button id="rg-btn" class="am-btn am-btn-green" onclick="doRegister()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        Create Account
+      </button>
+      <div class="am-switch">មានគណនីហើយ? <span onclick="switchAuthTab('login')">Login</span></div>
+    </div>
+
+    <!-- Profile Panel -->
+    <div id="panel-profile" class="am-panel" style="display:none">
+      <div id="profile-guest" class="am-guest">
+        <div class="am-guest-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="am-guest-text">អ្នកមិនទាន់ Login</div>
+        <div class="am-guest-sub">Login ដើម្បីទទួល 15 runs/day</div>
+        <button class="am-btn am-btn-primary" onclick="switchAuthTab('login')" style="margin-top:16px">Login Now</button>
+      </div>
+      <div id="profile-user" style="display:none">
+        <div class="am-user-card">
+          <div id="pf-avatar" class="am-avatar"></div>
+          <div class="am-user-info">
+            <div id="pf-name" class="am-user-name"></div>
+            <div id="pf-email" class="am-user-email"></div>
+            <div id="pf-id" class="am-user-id"></div>
+          </div>
+        </div>
+        <div class="am-rl-card">
+          <div class="am-rl-title">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Rate Limit
+          </div>
+          <div id="pf-rl-unlimited" class="am-rl-unlimited" style="display:none"><span>♾️</span> Unlimited Runs</div>
+          <div id="pf-rl-limited">
+            <div class="am-rl-row"><span>Code Runs / Day</span><span id="pf-rl-count" class="am-rl-count"></span></div>
+            <div class="am-rl-track"><div id="pf-rl-bar" class="am-rl-fill"></div></div>
+            <div id="pf-rl-reset" class="am-rl-reset"></div>
+          </div>
+        </div>
+        <div class="am-field">
+          <label class="am-label">Name</label>
+          <input id="pf-edit-name" type="text" class="am-input" placeholder="Your name"/>
+        </div>
+        <div class="am-field">
+          <label class="am-label">Bio</label>
+          <input id="pf-edit-bio" type="text" class="am-input" placeholder="Short bio (optional)"/>
+        </div>
+        <div id="pf-err" class="am-err"></div>
+        <button class="am-btn am-btn-primary" onclick="doUpdateProfile()" style="margin-bottom:8px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save Profile
+        </button>
+        <button class="am-btn am-btn-danger" onclick="doLogout()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+/* ── Auth Modal ────────────────────────────────────────────────────────────── */
+#auth-overlay {
+  display:none; position:fixed; inset:0; z-index:2000;
+  background:rgba(0,0,0,.78); backdrop-filter:blur(8px);
+  align-items:center; justify-content:center;
+}
+#auth-overlay.open { display:flex !important; }
+#auth-modal {
+  background:#0d1117; border:1px solid rgba(0,255,170,.18);
+  border-radius:16px; padding:30px 26px 26px; width:370px; max-width:95vw;
+  max-height:90vh; overflow-y:auto; position:relative;
+  box-shadow:0 0 0 1px rgba(0,255,170,.04),0 28px 80px rgba(0,0,0,.8);
+  animation:authIn .2s cubic-bezier(.4,0,.2,1);
+}
+@keyframes authIn { from{opacity:0;transform:scale(.95) translateY(-10px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.am-glow-line { position:absolute;top:0;left:24px;right:24px;height:1px;background:linear-gradient(90deg,transparent,rgba(0,255,170,.55),rgba(0,180,255,.55),transparent); }
+.am-close { position:absolute;top:13px;right:13px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:#7d8590;cursor:pointer;width:27px;height:27px;border-radius:7px;display:flex;align-items:center;justify-content:center;transition:all .15s; }
+.am-close:hover { background:rgba(248,81,73,.15);border-color:rgba(248,81,73,.3);color:#f85149; }
+.am-logo { width:50px;height:50px;margin:0 auto 10px;background:linear-gradient(135deg,rgba(0,255,170,.1),rgba(0,180,255,.1));border:1px solid rgba(0,255,170,.28);border-radius:14px;display:flex;align-items:center;justify-content:center;color:#00ffaa;filter:drop-shadow(0 0 10px rgba(0,255,170,.25)); }
+.am-brand { text-align:center;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:3px;background:linear-gradient(90deg,#00ffaa,#00b4ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:3px; }
+.am-tagline { text-align:center;font-size:9px;color:rgba(0,255,170,.38);letter-spacing:2.5px;text-transform:uppercase;font-family:'JetBrains Mono',monospace;margin-bottom:20px; }
+.am-tabs { display:flex;gap:3px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:3px;margin-bottom:20px; }
+.am-tab { flex:1;padding:7px 4px;border:none;border-radius:7px;cursor:pointer;font-size:11px;font-family:'JetBrains Mono',monospace;font-weight:600;letter-spacing:.4px;transition:all .15s;background:transparent;color:#484f58; }
+.am-tab.active { background:rgba(0,255,170,.1);color:#00ffaa;border:1px solid rgba(0,255,170,.22); }
+.am-tab:hover:not(.active) { background:rgba(255,255,255,.05);color:#e6edf3; }
+.am-panel { display:flex;flex-direction:column; }
+.am-field { display:flex;flex-direction:column;gap:5px;margin-bottom:11px; }
+.am-label { font-size:10px;font-weight:600;color:#484f58;letter-spacing:.8px;text-transform:uppercase;font-family:'JetBrains Mono',monospace; }
+.am-input { background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:10px 12px;color:#e6edf3;font-size:13px;font-family:'JetBrains Mono',monospace;outline:none;transition:border .15s,box-shadow .15s;width:100%;box-sizing:border-box; }
+.am-input:focus { border-color:rgba(0,255,170,.45);box-shadow:0 0 0 3px rgba(0,255,170,.07); }
+.am-input::placeholder { color:#30363d; }
+.am-err { font-size:11px;color:#f85149;display:none;padding:8px 10px;background:rgba(248,81,73,.07);border:1px solid rgba(248,81,73,.18);border-radius:7px;margin-bottom:8px;font-family:'JetBrains Mono',monospace;line-height:1.5; }
+.am-btn { width:100%;padding:11px;border:none;border-radius:9px;font-size:12px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;transition:all .15s;margin-bottom:9px; }
+.am-btn-primary { background:linear-gradient(135deg,rgba(0,255,170,.13),rgba(0,180,255,.13));border:1px solid rgba(0,255,170,.35);color:#00ffaa; }
+.am-btn-primary:hover { background:linear-gradient(135deg,rgba(0,255,170,.22),rgba(0,180,255,.22));box-shadow:0 0 20px rgba(0,255,170,.18);transform:translateY(-1px); }
+.am-btn-green { background:linear-gradient(135deg,rgba(63,185,80,.13),rgba(0,255,170,.08));border:1px solid rgba(63,185,80,.35);color:#3fb950; }
+.am-btn-green:hover { background:linear-gradient(135deg,rgba(63,185,80,.22),rgba(0,255,170,.18));box-shadow:0 0 20px rgba(63,185,80,.18);transform:translateY(-1px); }
+.am-btn-danger { background:rgba(248,81,73,.07);border:1px solid rgba(248,81,73,.22);color:#f85149; }
+.am-btn-danger:hover { background:rgba(248,81,73,.14);box-shadow:0 0 16px rgba(248,81,73,.12); }
+.am-switch { text-align:center;font-size:11px;color:#484f58;font-family:'JetBrains Mono',monospace; }
+.am-switch span { color:#00ffaa;cursor:pointer;text-decoration:underline;text-underline-offset:2px; }
+.am-switch span:hover { color:#00d4ff; }
+.am-guest { text-align:center;padding:12px 0 6px; }
+.am-guest-icon { width:60px;height:60px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;color:#30363d; }
+.am-guest-text { font-size:14px;font-weight:600;color:#e6edf3;margin-bottom:4px; }
+.am-guest-sub { font-size:11px;color:#484f58;font-family:'JetBrains Mono',monospace; }
+.am-user-card { display:flex;align-items:center;gap:12px;padding:13px;background:rgba(0,255,170,.04);border:1px solid rgba(0,255,170,.1);border-radius:10px;margin-bottom:12px; }
+.am-avatar { width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#00ffaa,#00b4ff);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:#0d1117;flex-shrink:0;font-family:'JetBrains Mono',monospace; }
+.am-user-info { min-width:0; }
+.am-user-name { font-size:14px;font-weight:700;color:#e6edf3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.am-user-email { font-size:11px;color:#7d8590;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'JetBrains Mono',monospace; }
+.am-user-id { font-size:10px;color:rgba(0,255,170,.45);margin-top:3px;font-family:'JetBrains Mono',monospace; }
+.am-rl-card { background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:11px 13px;margin-bottom:12px; }
+.am-rl-title { font-size:10px;font-weight:600;color:#484f58;text-transform:uppercase;letter-spacing:1px;font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:5px;margin-bottom:9px; }
+.am-rl-unlimited { display:flex;align-items:center;gap:8px;color:#00ffaa;font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace; }
+.am-rl-row { display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#e6edf3;margin-bottom:7px;font-family:'JetBrains Mono',monospace; }
+.am-rl-count { font-weight:700;color:#00ffaa; }
+.am-rl-track { background:rgba(255,255,255,.07);border-radius:4px;height:5px;overflow:hidden; }
+.am-rl-fill { height:100%;background:linear-gradient(90deg,#00ffaa,#00b4ff);border-radius:4px;transition:width .4s ease; }
+.am-rl-reset { font-size:10px;color:#30363d;margin-top:5px;font-family:'JetBrains Mono',monospace; }
+</style>
+
+<script>
+// ── VFS ───────────────────────────────────────────────────────────────────────
+const VK = 'genz_vfs_v3';
+function loadVFS() {
+  try {
+    const r = localStorage.getItem(VK);
+    if (r) return JSON.parse(r);
+  } catch {}
+  return mkVFS();
+}
+function saveVFS(v) { localStorage.setItem(VK, JSON.stringify(v)); }
+function mkVFS() {
+  return {
+    cwd: '/workspace',
+    nodes: {
+      '/workspace': 'd',
+      '/workspace/hello.js': { c: '// Hello World\nconsole.log("Hello, World!");\n\nconst nums = [1, 2, 3, 4, 5];\nconst sum = nums.reduce((a, b) => a + b, 0);\nconsole.log("Sum:", sum);\n\n// Try running this with: node hello.js', m: Date.now() },
+      '/workspace/hello.py': { c: '# Hello Python\nprint("Hello, World!")\n\nnums = [1, 2, 3, 4, 5]\nprint("Sum:", sum(nums))\n\n# Try: python hello.py', m: Date.now() },
+      '/workspace/index.html': { c: '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <title>My Page</title>\n</head>\n<body>\n  <h1>Hello World</h1>\n  <p>Welcome to Genz Dev!</p>\n</body>\n</html>', m: Date.now() },
+      '/workspace/app.js': { c: '// Interactive Demo\nfunction greet(name) {\n  return `Hello, ${name}!`;\n}\n\nconsole.log(greet("Developer"));\nconsole.log("Welcome to Genz Dev!");', m: Date.now() },
+      '/workspace/notes.md': { c: '# My Notes\n\n## Ideas\n- Learn JavaScript\n- Build something cool\n\n## Resources\n- MDN Web Docs\n- JavaScript.info\n\n## Shortcuts\n- `Ctrl+S` Save\n- `Ctrl+N` New File\n- `Ctrl+W` Close Tab', m: Date.now() },
+      '/workspace/utils': 'd',
+      '/workspace/utils/helpers.js': { c: '// Helper Functions\n\nexport function debounce(fn, delay) {\n  let timeout;\n  return (...args) => {\n    clearTimeout(timeout);\n    timeout = setTimeout(() => fn(...args), delay);\n  };\n}\n\nexport function clamp(val, min, max) {\n  return Math.min(Math.max(val, min), max);\n}', m: Date.now() }
+    }
+  };
+}
+function isDir(v, p) { return v.nodes[p] === 'd' || v.nodes[p]?.type === 'd'; }
+function getContent(v, p) { const n = v.nodes[p]; if (!n || n === 'd') return null; return typeof n === 'string' ? n : (n.c ?? ''); }
+function setContent(v, p, c) { v.nodes[p] = { c, m: Date.now() }; }
+function listDir(v, path) {
+  return Object.keys(v.nodes).filter(k => {
+    if (k === path) return false;
+    const par = k.substring(0, k.lastIndexOf('/')) || '/';
+    return par === path;
+  }).map(k => ({ name: k.split('/').pop(), path: k, isDir: isDir(v, k) }));
+}
+function resolvePath(cwd, t) {
+  if (!t || t === '.') return cwd;
+  if (t === '~' || t === '') return '/workspace';
+  if (t === '..') return cwd.split('/').filter(Boolean).slice(0, -1).reduce((a, b) => a + '/' + b, '/') || '/';
+  if (t.startsWith('/')) return norm(t);
+  return norm(cwd + '/' + t);
+}
+function norm(p) {
+  const s = [];
+  for (const x of p.split('/').filter(Boolean)) {
+    if (x === '..') s.pop();
+    else if (x !== '.') s.push(x);
+  }
+  return '/' + s.join('/');
+}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let vfs = loadVFS();
+let openTabs = [];
+let activeTab = null;
+let hist = JSON.parse(localStorage.getItem('genz_hist_v3') || '[]');
+let hidx = -1;
+let termCollapsed = false;
+let currentAct = 'files';
+
+// ── Rate limiter ──────────────────────────────────────────────────────────────
+class RL {
+  constructor(m = 60, w = 60000) { this.m = m; this.w = w; this.a = []; }
+  ok() { const n = Date.now(); this.a = this.a.filter(t => n - t < this.w); if (this.a.length >= this.m) return false; this.a.push(n); return true; }
+  left() { const n = Date.now(); this.a = this.a.filter(t => n - t < this.w); return Math.max(0, this.m - this.a.length); }
+}
+const tRL = new RL(60, 60000);
+
+// ── File icons ────────────────────────────────────────────────────────────────
+function getFileIcon(name) {
+  const ext = name.split('.').pop()?.toLowerCase();
+  const icons = {
+    js: { color: '#f7df1e', svg: '<svg viewBox="0 0 24 24" fill="currentColor"><rect width="24" height="24" rx="2"/><text x="6" y="18" font-size="12" font-weight="bold" fill="#000">JS</text></svg>' },
+    ts: { color: '#3178c6', svg: '<svg viewBox="0 0 24 24" fill="currentColor"><rect width="24" height="24" rx="2"/><text x="5" y="18" font-size="12" font-weight="bold" fill="#fff">TS</text></svg>' },
+    py: { color: '#3776ab', svg: '<svg viewBox="0 0 24 24" fill="currentColor"><rect width="24" height="24" rx="2"/><text x="5" y="18" font-size="12" font-weight="bold" fill="#ffd43b">Py</text></svg>' },
+    html: { color: '#e34f26', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l2 16 6 2 6-2 2-16z"/><path d="M8 8h8l-1 8-3 1-3-1-.3-3"/></svg>' },
+    css: { color: '#1572b6', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l2 16 6 2 6-2 2-16z"/><text x="7" y="15" font-size="8" font-weight="bold">CSS</text></svg>' },
+    json: { color: '#cbcb41', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-2"/><path d="M7 8h10M7 12h10M7 16h6"/></svg>' },
+    md: { color: '#519aba', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg>' },
+    default: { color: 'var(--text-muted)', svg: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' }
+  };
+  return icons[ext] || icons.default;
+}
+
+function langFromExt(name) {
+  const e = name.split('.').pop()?.toLowerCase();
+  return { js: 'JavaScript', ts: 'TypeScript', py: 'Python', html: 'HTML', css: 'CSS', json: 'JSON', md: 'Markdown', sh: 'Shell', c: 'C', cpp: 'C++', java: 'Java' }[e] || 'Plain Text';
+}
+
+// ── Notifications ─────────────────────────────────────────────────────────────
+function notify(msg, type = 'info') {
+  const container = document.getElementById('notifications');
+  const n = document.createElement('div');
+  n.className = `notification ${type}`;
+  const icons = {
+    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>'
+  };
+  n.innerHTML = `${icons[type]}<span>${msg}</span>`;
+  container.appendChild(n);
+  setTimeout(() => {
+    n.classList.add('leaving');
+    setTimeout(() => n.remove(), 300);
+  }, 3000);
+}
+
+// ── UI helpers ────────────────────────────────────────────────────────────────
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('hidden');
+}
+
+function resetFS() {
+  if (!confirm('Reset all files and settings?')) return;
+  localStorage.removeItem(VK);
+  localStorage.removeItem('genz_hist_v3');
+  location.reload();
+}
+
+function setAct(id) {
+  document.querySelectorAll('.act').forEach(a => a.classList.remove('active'));
+  document.getElementById('act-' + id)?.classList.add('active');
+  currentAct = id;
+
+  const isSearch = id === 'search';
+  const title = document.getElementById('sidebar-title');
+  const explorerActions = document.getElementById('explorer-actions');
+  const fileTree = document.getElementById('file-tree');
+  const searchPanel = document.getElementById('search-panel');
+
+  if (title) title.textContent = isSearch ? 'Search' : 'Explorer';
+  if (explorerActions) explorerActions.style.display = isSearch ? 'none' : 'flex';
+  if (fileTree) fileTree.style.display = isSearch ? 'none' : 'block';
+  if (searchPanel) searchPanel.style.display = isSearch ? 'flex' : 'none';
+
+  if (isSearch) {
+    setTimeout(() => document.getElementById('search-input')?.focus(), 50);
+    doSearch(document.getElementById('search-input')?.value || '');
+  } else {
+    renderTree();
+  }
+}
+
+// ── Search in files ───────────────────────────────────────────────────────────
+let _searchTimer = null;
+function doSearchDebounced(q) {
+  clearTimeout(_searchTimer);
+  const countEl = document.getElementById('search-count');
+  if (countEl && q) countEl.textContent = '...';
+  _searchTimer = setTimeout(() => doSearch(q), 500);
+}
+function doSearch(query) {
+  const resultsEl = document.getElementById('search-results');
+  const countEl   = document.getElementById('search-count');
+  if (!resultsEl) return;
+
+  const q = query.trim();
+  if (!q) {
+    resultsEl.innerHTML = '<div style="padding:16px 14px;font-size:12px;color:var(--text-muted)">Type to search across all files</div>';
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+
+  const caseSensitive = document.getElementById('search-case')?.checked;
+  const useRegex      = document.getElementById('search-regex')?.checked;
+  const wholeWord     = document.getElementById('search-word')?.checked;
+
+  // Build regex
+  let pattern;
+  try {
+    let src = useRegex ? q : q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if (wholeWord) src = `\\b${src}\\b`;
+    pattern = new RegExp(src, caseSensitive ? 'g' : 'gi');
+  } catch {
+    resultsEl.innerHTML = '<div style="padding:12px 14px;font-size:12px;color:var(--error)">Invalid regex pattern</div>';
+    return;
+  }
+
+  // Search all files in VFS
+  const files = Object.entries(vfs.nodes).filter(([p, n]) => n !== 'd' && typeof n !== 'string' && n?.c !== undefined);
+  let totalMatches = 0;
+  const fragments = [];
+
+  for (const [filePath, node] of files) {
+    const content = node.c || '';
+    const lines = content.split('\n');
+    const fileMatches = [];
+
+    lines.forEach((line, idx) => {
+      pattern.lastIndex = 0;
+      const matches = [...line.matchAll(pattern)];
+      if (matches.length > 0) {
+        totalMatches += matches.length;
+        // Highlight matches in line
+        let highlighted = '';
+        let last = 0;
+        for (const m of matches) {
+          highlighted += escHtml(line.slice(last, m.index));
+          highlighted += `<mark style="background:rgba(255,200,0,.35);color:var(--text);border-radius:2px">${escHtml(m[0])}</mark>`;
+          last = m.index + m[0].length;
+        }
+        highlighted += escHtml(line.slice(last));
+        fileMatches.push({ lineNum: idx + 1, highlighted, line });
+      }
+    });
+
+    if (fileMatches.length === 0) continue;
+
+    const name = filePath.split('/').pop();
+    const icon = getFileIcon(name);
+    const matchWord = fileMatches.length === 1 ? 'match' : 'matches';
+
+    let matchRows = fileMatches.slice(0, 20).map(m => `
+      <div onclick="openFile('${filePath}');jumpToLine(${m.lineNum})"
+        style="padding:3px 14px 3px 28px;cursor:pointer;font-size:11px;
+               font-family:'JetBrains Mono',monospace;color:var(--text-muted);
+               white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.6"
+        onmouseover="this.style.background='var(--hover)'"
+        onmouseout="this.style.background='transparent'"
+        title="Line ${m.lineNum}: ${escHtml(m.line.trim())}">
+        <span style="color:var(--text-muted);margin-right:8px;min-width:28px;display:inline-block;text-align:right">${m.lineNum}</span>
+        ${m.highlighted}
+      </div>
+    `).join('');
+
+    if (fileMatches.length > 20) {
+      matchRows += `<div style="padding:2px 14px 4px 28px;font-size:10px;color:var(--text-muted)">+${fileMatches.length - 20} more matches</div>`;
+    }
+
+    fragments.push(`
+      <div style="margin-bottom:2px">
+        <div onclick="openFile('${filePath}')"
+          style="display:flex;align-items:center;gap:6px;padding:5px 12px;cursor:pointer;
+                 font-size:12px;font-weight:600;color:var(--text);position:sticky;top:0;
+                 background:var(--bg-secondary);border-bottom:1px solid var(--border)"
+          onmouseover="this.style.background='var(--hover)'"
+          onmouseout="this.style.background='var(--bg-secondary)'">
+          <span style="color:${icon.color};flex-shrink:0;width:14px;height:14px;display:flex">${icon.svg}</span>
+          <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(name)}</span>
+          <span style="font-size:10px;color:var(--text-muted);font-weight:400;flex-shrink:0">${fileMatches.length} ${matchWord}</span>
+        </div>
+        ${matchRows}
+      </div>
+    `);
+  }
+
+  if (countEl) countEl.textContent = totalMatches > 0 ? `${totalMatches} result${totalMatches !== 1 ? 's' : ''}` : '';
+
+  if (fragments.length === 0) {
+    resultsEl.innerHTML = `<div style="padding:16px 14px;font-size:12px;color:var(--text-muted)">No results for "<strong style="color:var(--text)">${escHtml(q)}</strong>"</div>`;
+  } else {
+    resultsEl.innerHTML = fragments.join('');
+  }
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function jumpToLine(lineNum) {
+  const ta = document.getElementById('editor');
+  if (!ta) return;
+  const lines = ta.value.split('\n');
+  let pos = 0;
+  for (let i = 0; i < Math.min(lineNum - 1, lines.length); i++) pos += lines[i].length + 1;
+  ta.focus();
+  ta.setSelectionRange(pos, pos + (lines[lineNum - 1]?.length || 0));
+  // Scroll line into view
+  const lineH = ta.scrollHeight / (lines.length || 1);
+  ta.scrollTop = Math.max(0, (lineNum - 4) * lineH);
+  updateLineNumbers();
+}
+
+function toggleTerm(e) {
+  if (e) e.stopPropagation();
+  termCollapsed = !termCollapsed;
+  const p = document.getElementById('term-panel');
+  p.classList.toggle('collapsed', termCollapsed);
+  if (!termCollapsed) {
+    setTimeout(() => {
+      const t = typeof getActiveTerm !== 'undefined' ? getActiveTerm() : null;
+      if (t) t.inputEl.focus();
+    }, 50);
+  }
+}
+
+// ── File Tree ─────────────────────────────────────────────────────────────────
+function renderTree() {
+  const el = document.getElementById('file-tree');
+  el.innerHTML = '';
+
+  function renderDir(path, depth) {
+    const items = listDir(vfs, path).sort((a, b) => a.isDir === b.isDir ? a.name.localeCompare(b.name) : a.isDir ? -1 : 1);
+    items.forEach(({ name, path: p, isDir: d }) => {
+      const row = document.createElement('div');
+      row.className = 'ti' + (activeTab === p ? ' sel' : '');
+      row.style.paddingLeft = (depth * 16 + 12) + 'px';
+      row.setAttribute('role', 'treeitem');
+      row.tabIndex = 0;
+
+      const icon = d
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>'
+        : getFileIcon(name).svg;
+
+      row.innerHTML = `
+        <span class="ic">${icon}</span>
+        <span class="nm">${name}</span>
+        <span class="acts">
+          <button onclick="event.stopPropagation();renameItem('${p}')" title="Rename" aria-label="Rename">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+          </button>
+          <button onclick="event.stopPropagation();deleteItem('${p}')" title="Delete" aria-label="Delete">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          </button>
+        </span>
+      `;
+
+      row.onclick = () => {
+        if (d) {
+          vfs.cwd = p;
+          saveVFS(vfs);
+          renderTree();
+        } else {
+          openFile(p);
+        }
+      };
+
+      row.oncontextmenu = (e) => {
+        e.preventDefault();
+        showCtx(e, p, d);
+      };
+
+      el.appendChild(row);
+
+      if (d) renderDir(p, depth + 1);
+    });
+  }
+
+  renderDir('/workspace', 0);
+}
+
+// ── Editor tabs ───────────────────────────────────────────────────────────────
+function renderTabs() {
+  const el = document.getElementById('editor-tabs');
+  el.innerHTML = '';
+
+  openTabs.forEach(({ path, modified }) => {
+    const name = path.split('/').pop();
+    const tab = document.createElement('div');
+    tab.className = 'etab' + (path === activeTab ? ' active' : '') + (modified ? ' modified' : '');
+    tab.setAttribute('role', 'tab');
+    tab.tabIndex = 0;
+
+    tab.innerHTML = `
+      <span class="file-icon">${getFileIcon(name).svg}</span>
+      <span class="file-name">${name}</span>
+      <span class="modified-dot"></span>
+      <button class="close-btn" onclick="event.stopPropagation();closeTab('${path}')" aria-label="Close ${name}">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    `;
+
+    tab.onclick = () => switchTab(path);
+    el.appendChild(tab);
+  });
+}
+
+function openFile(path) {
+  if (!openTabs.find(t => t.path === path)) openTabs.push({ path, modified: false });
+  switchTab(path);
+}
+
+function switchTab(path) {
+  if (activeTab) {
+    const ta = document.getElementById('editor');
+    const tab = openTabs.find(t => t.path === activeTab);
+    if (tab && document.getElementById('editor-container').classList.contains('active')) {
+      const cur = getContent(vfs, activeTab);
+      if (ta.value !== cur) {
+        tab.modified = true;
+        setContent(vfs, activeTab, ta.value);
+        saveVFS(vfs);
+      }
+    }
+  }
+
+  activeTab = path;
+  const content = getContent(vfs, path) || '';
+  const ta = document.getElementById('editor');
+  const nf = document.getElementById('no-file');
+  const ec = document.getElementById('editor-container');
+
+  ta.value = content;
+  ec.classList.add('active');
+  nf.style.display = 'none';
+
+  // Focus editor so shortcuts work immediately
+  setTimeout(() => { ta.focus(); }, 0);
+
+  ta.oninput = () => {
+    const t = openTabs.find(x => x.path === path);
+    if (t) t.modified = true;
+    renderTabs();
+    updateLineNumbers();
+  };
+
+  renderTabs();
+  renderTree();
+  updateLineNumbers();
+
+  const name = path.split('/').pop();
+  document.getElementById('sb-file').textContent = name;
+  document.getElementById('sb-lang').textContent = langFromExt(name);
+}
+
+function updateLineNumbers() {
+  const ta = document.getElementById('editor');
+  const ln = document.getElementById('line-nums');
+  const lines = ta.value.split('\n').length;
+  const currentLine = ta.value.substring(0, ta.selectionStart).split('\n').length;
+
+  let html = '';
+  for (let i = 1; i <= lines; i++) {
+    html += `<div class="line-num${i === currentLine ? ' active' : ''}">${i}</div>`;
+  }
+  ln.innerHTML = html;
+}
+
+function closeTab(path) {
+  const tab = openTabs.find(t => t.path === path);
+  if (tab?.modified) {
+    const ta = document.getElementById('editor');
+    if (activeTab === path) {
+      setContent(vfs, path, ta.value);
+      saveVFS(vfs);
+    }
+  }
+
+  openTabs = openTabs.filter(t => t.path !== path);
+
+  if (activeTab === path) {
+    activeTab = openTabs[openTabs.length - 1]?.path || null;
+    if (activeTab) {
+      switchTab(activeTab);
+    } else {
+      document.getElementById('editor-container').classList.remove('active');
+      document.getElementById('no-file').style.display = 'flex';
+      document.getElementById('sb-file').textContent = 'No file open';
+      document.getElementById('sb-lang').textContent = 'Plain Text';
+    }
+  }
+
+  renderTabs();
+}
+
+function saveActive() {
+  if (!activeTab) return;
+  const ta = document.getElementById('editor');
+  setContent(vfs, activeTab, ta.value);
+  saveVFS(vfs);
+  const tab = openTabs.find(t => t.path === activeTab);
+  if (tab) tab.modified = false;
+  renderTabs();
+  notify('Saved ' + activeTab.split('/').pop(), 'success');
+}
+
+// ── File operations ───────────────────────────────────────────────────────────
+function newFile() {
+  const n = prompt('File name:');
+  if (!n) return;
+  const safe = n.trim().replace(/[^a-zA-Z0-9._-]/g, '_');
+  const p = '/workspace/' + safe;
+  if (vfs.nodes[p]) return alert('File already exists');
+  vfs.nodes[p] = { c: '', m: Date.now() };
+  saveVFS(vfs);
+  renderTree();
+  openFile(p);
+  notify('Created ' + safe, 'success');
+}
+
+function newDir() {
+  const n = prompt('Folder name:');
+  if (!n) return;
+  const safe = n.trim().replace(/[^a-zA-Z0-9._-]/g, '_');
+  const p = '/workspace/' + safe;
+  if (vfs.nodes[p]) return alert('Folder already exists');
+  vfs.nodes[p] = 'd';
+  saveVFS(vfs);
+  renderTree();
+  notify('Created folder ' + safe, 'success');
+}
+
+function renameItem(path) {
+  const old = path.split('/').pop();
+  const n = prompt('Rename to:', old);
+  if (!n || n === old) return;
+  const safe = n.trim().replace(/[^a-zA-Z0-9._-]/g, '_');
+  const newPath = path.substring(0, path.lastIndexOf('/')) + '/' + safe;
+  vfs.nodes[newPath] = vfs.nodes[path];
+  delete vfs.nodes[path];
+  saveVFS(vfs);
+  if (activeTab === path) {
+    activeTab = newPath;
+    openTabs = openTabs.map(t => t.path === path ? { ...t, path: newPath } : t);
+  }
+  renderTree();
+  renderTabs();
+  notify('Renamed to ' + safe, 'success');
+}
+
+function deleteItem(path) {
+  if (!confirm('Delete ' + path.split('/').pop() + '?')) return;
+  Object.keys(vfs.nodes).filter(k => k === path || k.startsWith(path + '/')).forEach(k => delete vfs.nodes[k]);
+  saveVFS(vfs);
+  openTabs = openTabs.filter(t => t.path !== path && !t.path.startsWith(path + '/'));
+  if (activeTab === path || activeTab?.startsWith(path + '/')) {
+    activeTab = null;
+    document.getElementById('editor-container').classList.remove('active');
+    document.getElementById('no-file').style.display = 'flex';
+  }
+  renderTree();
+  renderTabs();
+  notify('Deleted ' + path.split('/').pop(), 'info');
+}
+
+// ── Context menu ──────────────────────────────────────────────────────────────
+function showCtx(e, path, isD) {
+  const ctx = document.getElementById('ctx');
+  ctx.innerHTML = `
+    ${!isD ? `<div class="ctx-item" onclick="openFile('${path}');hideCtx()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Open</div>` : ''}
+    ${!isD ? `<div class="ctx-item" onclick="runFile('${path}');hideCtx()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>Run</div>` : ''}
+    <div class="ctx-item" onclick="renameItem('${path}');hideCtx()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>Rename</div>
+    <div class="ctx-sep"></div>
+    <div class="ctx-item" onclick="deleteItem('${path}');hideCtx()" style="color:var(--error)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Delete</div>
+  `;
+  ctx.style.display = 'block';
+  ctx.style.left = Math.min(e.clientX, window.innerWidth - 200) + 'px';
+  ctx.style.top = Math.min(e.clientY, window.innerHeight - 150) + 'px';
+}
+
+function hideCtx() { document.getElementById('ctx').style.display = 'none'; }
+document.addEventListener('click', hideCtx);
+
+function runFile(path) {
+  const ext  = path.split('.').pop()?.toLowerCase();
+  const name = path.split('/').pop();
+  const cmd  = (ext === 'py' ? 'python ' : 'node ') + name;
+  // Directly run the command in active terminal
+  const t = typeof getActiveTerm !== 'undefined' ? getActiveTerm() : null;
+  if (t) {
+    t.inputEl.value = cmd;
+    // Show command in output then execute
+    _tprintTo(t, 'cmd', t.promptEl.textContent + cmd);
+    t.inputEl.value = '';
+    if (typeof runCmd === 'function') runCmd(cmd);
+  }
+}
+
+// ── KEYBOARD SHORTCUTS ───────────────────────────────────────────────────────
+
+const editorEl = document.getElementById('editor');
+const editorContainer = document.getElementById('editor-container');
+editorEl.setAttribute('tabindex', '0');
+
+// Click editor area → focus editor
+document.getElementById('editor-area')?.addEventListener('mousedown', () => {
+  if (activeTab) setTimeout(() => editorEl.focus(), 0);
+});
+
+// ── Two separate listeners ────────────────────────────────────────────────────
+// 1) capture=true  → only for browser-level shortcuts (Ctrl+F, Ctrl+S, Ctrl+N, Ctrl+W)
+//    These MUST preventDefault before browser acts on them.
+// 2) capture=false → all editor shortcuts, runs after focus is settled
+
+// CAPTURE: intercept browser shortcuts only
+document.addEventListener('keydown', function(e) {
+  // Never intercept when a widget input or other input is the target
+  const tid = e.target?.id;
+  if (tid === 'fw-find' || tid === 'fw-replace' || tid === 'goto-input') return;
+  const tag = e.target?.tagName;
+  if (tag === 'INPUT' || tag === 'SELECT') return;
+  if (e.target?.getAttribute('contenteditable') === 'true') return;
+
+  const ctrl = e.ctrlKey, shift = e.shiftKey, alt = e.altKey, key = e.key;
+  if (!ctrl) return; // capture only handles Ctrl shortcuts
+
+  if (!shift && !alt && key === 's') { e.preventDefault(); if (activeTab) saveActive(); return; }
+  if (!shift && !alt && key === 'n') { e.preventDefault(); newFile(); return; }
+  if (!shift && !alt && key === 'w') { e.preventDefault(); if (activeTab) closeTab(activeTab); return; }
+  if (!shift && !alt && key === 'f') { e.preventDefault(); fwOpen(false); return; }
+  if (!shift && !alt && key === 'h') { e.preventDefault(); fwOpen(true);  return; }
+  if (!shift && !alt && key === 'p') { e.preventDefault(); setAct('search'); setTimeout(()=>document.getElementById('search-input')?.focus(),50); return; }
+}, true);
+
+// BUBBLE: all other shortcuts
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('auth-overlay')?.classList.contains('open')) return;
+
+  // Skip when typing in widget inputs
+  const tid = e.target?.id;
+  if (tid === 'fw-find' || tid === 'fw-replace' || tid === 'goto-input') return;
+
+  // Skip when typing in other inputs (terminal, search box, etc.)
+  const tag = e.target?.tagName;
+  const isOtherInput = (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' ||
+                        e.target?.getAttribute('contenteditable') === 'true') &&
+                       e.target !== editorEl;
+  if (isOtherInput) return;
+
+  const ctrl = e.ctrlKey, shift = e.shiftKey, alt = e.altKey, key = e.key;
+
+  // ── Global shortcuts ──────────────────────────────────────────────────────
+  if (ctrl && !shift && key === '`')         { e.preventDefault(); toggleTerm(); return; }
+  if (ctrl &&  shift && key === '`')         { e.preventDefault(); addTerminal(); return; }
+  if (ctrl &&  shift && key === 'F')         { e.preventDefault(); setAct('search'); return; }
+  if (ctrl && !shift && !alt && key === 'g') { e.preventDefault(); gotoOpen(); return; }
+  if (ctrl && !shift && !alt && key === 'b') { e.preventDefault(); toggleSidebar(); return; }
+  if (ctrl && key === 'c' && typeof _isRunning !== 'undefined' && _isRunning) { e.preventDefault(); stopExecution(); return; }
+
+  if (key === 'Escape') {
+    const fw = document.getElementById('find-widget');
+    const gw = document.getElementById('goto-widget');
+    if (fw?.style.display !== 'none') { e.preventDefault(); fwClose(); return; }
+    if (gw?.style.display !== 'none') { e.preventDefault(); gotoClose(); return; }
+    return;
+  }
+
+  // ── Editor shortcuts — only when editor panel is active ───────────────────
+  if (!activeTab || !editorContainer.classList.contains('active')) return;
+
+  const fw = document.getElementById('find-widget');
+  const gw = document.getElementById('goto-widget');
+  if (fw?.style.display !== 'none' || gw?.style.display !== 'none') return;
+
+  const ta = editorEl;
+  const focused = document.activeElement === ta;
+
+  // Focus editor for Ctrl/Alt shortcuts before executing
+  if (!focused && (ctrl || alt) && !isOtherInput) ta.focus();
+
+  // Ctrl+D
+  if (ctrl && !shift && !alt && key === 'd')  { e.preventDefault(); edSelectNextOccurrence?.(); return; }
+  // Ctrl+/
+  if (ctrl && !shift && !alt && key === '/')  { e.preventDefault(); edToggleComment?.(); return; }
+  // Ctrl+Shift+K
+  if (ctrl &&  shift && key === 'K')          { e.preventDefault(); edDeleteLine?.(); return; }
+  // Ctrl+Shift+D
+  if (ctrl &&  shift && key === 'D')          { e.preventDefault(); edDuplicateLine?.(); return; }
+  // Ctrl+] Ctrl+[
+  if (ctrl && !shift && key === ']')          { e.preventDefault(); edIndent?.(1);  return; }
+  if (ctrl && !shift && key === '[')          { e.preventDefault(); edIndent?.(-1); return; }
+  // Ctrl+Shift+U/L
+  if (ctrl &&  shift && key === 'U')          { e.preventDefault(); edTransformCase?.('upper'); return; }
+  if (ctrl &&  shift && key === 'L')          { e.preventDefault(); edTransformCase?.('lower'); return; }
+  // Alt+Up/Down
+  if (alt && !ctrl && key === 'ArrowUp')      { e.preventDefault(); edMoveLine?.(-1); return; }
+  if (alt && !ctrl && key === 'ArrowDown')    { e.preventDefault(); edMoveLine?.(1);  return; }
+  // Alt+Z
+  if (alt && !ctrl && key === 'z')            { e.preventDefault(); edToggleWordWrap?.(); return; }
+  // Ctrl+Home/End
+  if (ctrl && key === 'Home') { e.preventDefault(); ta.setSelectionRange(0,0); ta.scrollTop=0; updateLineNumbers(); return; }
+  if (ctrl && key === 'End')  { e.preventDefault(); ta.setSelectionRange(ta.value.length,ta.value.length); ta.scrollTop=ta.scrollHeight; updateLineNumbers(); return; }
+  // Ctrl+A
+  if (ctrl && !shift && key === 'a') { e.preventDefault(); ta.select(); return; }
+  // Ctrl+L
+  if (ctrl && !shift && !alt && key === 'l') {
+    e.preventDefault();
+    const v=ta.value, s=ta.selectionStart;
+    const ls=v.lastIndexOf('\n',s-1)+1; let le=v.indexOf('\n',s); le=le===-1?v.length:le;
+    ta.setSelectionRange(ls,le); return;
+  }
+  // Ctrl+X (cut line)
+  if (ctrl && !shift && key === 'x' && ta.selectionStart===ta.selectionEnd) {
+    e.preventDefault();
+    const v=ta.value, s=ta.selectionStart;
+    const ls=v.lastIndexOf('\n',s-1)+1; let le=v.indexOf('\n',s); le=le===-1?v.length:le+1;
+    navigator.clipboard?.writeText(v.slice(ls,le)).catch(()=>{});
+    ta.value=v.slice(0,ls)+v.slice(le);
+    ta.setSelectionRange(Math.min(ls,ta.value.length),Math.min(ls,ta.value.length));
+    edChanged(); return;
+  }
+  // Ctrl+Shift+Enter (line above)
+  if (ctrl && shift && key === 'Enter') {
+    e.preventDefault();
+    const v=ta.value, s=ta.selectionStart;
+    const ls=v.lastIndexOf('\n',s-1)+1, indent=v.slice(ls,s).match(/^(\s*)/)[1];
+    ta.value=v.slice(0,ls)+indent+'\n'+v.slice(ls);
+    ta.setSelectionRange(ls+indent.length,ls+indent.length);
+    edChanged(); return;
+  }
+  // Ctrl+Enter (line below)
+  if (ctrl && !shift && key === 'Enter') {
+    e.preventDefault();
+    const v=ta.value, s=ta.selectionStart;
+    const ls=v.lastIndexOf('\n',s-1)+1; let le=v.indexOf('\n',s); le=le===-1?v.length:le;
+    const indent=v.slice(ls,s).match(/^(\s*)/)[1];
+    ta.value=v.slice(0,le)+'\n'+indent+v.slice(le);
+    ta.setSelectionRange(le+1+indent.length,le+1+indent.length);
+    edChanged(); return;
+  }
+
+  // ── Typing shortcuts — editor MUST be focused ─────────────────────────────
+  // Typing shortcuts need editor focused — if not focused, skip (user is elsewhere)
+  if (document.activeElement !== ta) return;
+
+  // Tab
+  if (key === 'Tab' && !ctrl && !alt) {
+    e.preventDefault();
+    const {selectionStart:s, selectionEnd:end, value:v} = ta;
+    if (s === end) { ta.value=v.slice(0,s)+'  '+v.slice(end); ta.setSelectionRange(s+2,s+2); }
+    else edIndent?.(shift ? -1 : 1);
+    edChanged(); return;
+  }
+  // Enter (auto-indent)
+  if (key === 'Enter' && !ctrl && !alt && !shift) {
+    e.preventDefault();
+    const {selectionStart:s, value:v} = ta;
+    const ls=v.lastIndexOf('\n',s-1)+1, line=v.slice(ls,s);
+    const indent=line.match(/^(\s*)/)[1], extra=/[{(\[:]$/.test(line.trimEnd())?'  ':'';
+    const ins='\n'+indent+extra;
+    ta.value=v.slice(0,s)+ins+v.slice(ta.selectionEnd);
+    ta.setSelectionRange(s+ins.length,s+ins.length);
+    edChanged(); return;
+  }
+  // Auto-close brackets
+  if (!ctrl && !alt && !e.metaKey) {
+    const pairs={'(':')','[':']','{':'}','"':'"',"'":"'",'`':'`'};
+    if (pairs[key]) {
+      const {selectionStart:s, selectionEnd:end, value:v} = ta;
+      if (s !== end) {
+        e.preventDefault();
+        ta.value=v.slice(0,s)+key+v.slice(s,end)+pairs[key]+v.slice(end);
+        ta.setSelectionRange(s+1,end+1); edChanged();
+      } else if (pairs[key] !== key) {
+        e.preventDefault();
+        ta.value=v.slice(0,s)+key+pairs[key]+v.slice(end);
+        ta.setSelectionRange(s+1,s+1); edChanged();
+      }
+    }
+  }
+});
+
+function edChanged() {
+  const t = openTabs.find(x => x.path === activeTab);
+  if (t) t.modified = true;
+  renderTabs();
+  updateLineNumbers();
+}
+
+// ── Get current line info ─────────────────────────────────────────────────────
+function edGetLineInfo(ta) {
+  const v = ta.value, s = ta.selectionStart, e = ta.selectionEnd;
+  const lineStart = v.lastIndexOf('\n', s - 1) + 1;
+  const lineEnd   = v.indexOf('\n', s); 
+  const end2 = lineEnd === -1 ? v.length : lineEnd;
+  return { v, s, e, lineStart, lineEnd: end2 };
+}
+
+// ── Toggle line comment ───────────────────────────────────────────────────────
+function edToggleComment() {
+  const ta = document.getElementById('editor');
+  const ext = activeTab?.split('.').pop()?.toLowerCase() || 'js';
+  const prefix = { py: '# ', rb: '# ', sh: '# ', r: '# ', lua: '-- ', sql: '-- ' }[ext] || '// ';
+
+  const { v, s, e } = { v: ta.value, s: ta.selectionStart, e: ta.selectionEnd };
+  const lineS = v.lastIndexOf('\n', s - 1) + 1;
+  const lineE = e === s ? (v.indexOf('\n', s) + 1 || v.length + 1) : (v.indexOf('\n', e - 1) + 1 || v.length + 1);
+  const block = v.slice(lineS, lineE - 1);
+  const lines = block.split('\n');
+  const allCommented = lines.every(l => l.trimStart().startsWith(prefix.trim()));
+  const newLines = lines.map(l => allCommented
+    ? l.replace(new RegExp('^(\\s*)' + prefix.trim().replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + '\\s?'), '$1')
+    : l.replace(/^(\s*)/, '$1' + prefix));
+  const newBlock = newLines.join('\n');
+  ta.value = v.slice(0, lineS) + newBlock + v.slice(lineE - 1);
+  ta.setSelectionRange(lineS, lineS + newBlock.length);
+  edChanged();
+}
+
+// ── Delete line ───────────────────────────────────────────────────────────────
+function edDeleteLine() {
+  const ta = document.getElementById('editor');
+  const v = ta.value, s = ta.selectionStart;
+  const lineS = v.lastIndexOf('\n', s - 1) + 1;
+  let lineE = v.indexOf('\n', s);
+  lineE = lineE === -1 ? v.length : lineE + 1;
+  ta.value = v.slice(0, lineS) + v.slice(lineE);
+  const newPos = Math.min(lineS, ta.value.length);
+  ta.setSelectionRange(newPos, newPos);
+  edChanged();
+}
+
+// ── Duplicate line ────────────────────────────────────────────────────────────
+function edDuplicateLine() {
+  const ta = document.getElementById('editor');
+  const v = ta.value, s = ta.selectionStart;
+  const lineS = v.lastIndexOf('\n', s - 1) + 1;
+  let lineE = v.indexOf('\n', s);
+  lineE = lineE === -1 ? v.length : lineE;
+  const line = v.slice(lineS, lineE);
+  ta.value = v.slice(0, lineE) + '\n' + line + v.slice(lineE);
+  const offset = lineE - lineS + 1;
+  ta.setSelectionRange(s + offset, s + offset);
+  edChanged();
+}
+
+// ── Move line up/down ─────────────────────────────────────────────────────────
+function edMoveLine(dir) {
+  const ta = document.getElementById('editor');
+  const lines = ta.value.split('\n');
+  const s = ta.selectionStart;
+  const before = ta.value.slice(0, s);
+  const lineIdx = before.split('\n').length - 1;
+  const target = lineIdx + dir;
+  if (target < 0 || target >= lines.length) return;
+  [lines[lineIdx], lines[target]] = [lines[target], lines[lineIdx]];
+  const newVal = lines.join('\n');
+  ta.value = newVal;
+  // Restore cursor on moved line
+  const newBefore = lines.slice(0, target).join('\n');
+  const col = s - ta.value.split('\n').slice(0, lineIdx).join('\n').length - (lineIdx > 0 ? 1 : 0);
+  const newPos = newBefore.length + (target > 0 ? 1 : 0) + Math.max(0, col);
+  ta.setSelectionRange(Math.min(newPos, newVal.length), Math.min(newPos, newVal.length));
+  edChanged();
+}
+
+// ── Indent / Outdent selected lines ──────────────────────────────────────────
+function edIndent(dir) {
+  const ta = document.getElementById('editor');
+  const v = ta.value, s = ta.selectionStart, e = ta.selectionEnd;
+  const lineS = v.lastIndexOf('\n', s - 1) + 1;
+  const lineE = e === s ? (v.indexOf('\n', s) + 1 || v.length + 1) : (v.indexOf('\n', e - 1) + 1 || v.length + 1);
+  const block = v.slice(lineS, lineE - 1);
+  const lines = block.split('\n');
+  const newLines = lines.map(l => dir > 0 ? '  ' + l : l.replace(/^  /, ''));
+  const newBlock = newLines.join('\n');
+  ta.value = v.slice(0, lineS) + newBlock + v.slice(lineE - 1);
+  ta.setSelectionRange(lineS, lineS + newBlock.length);
+  edChanged();
+}
+
+// ── Transform case ────────────────────────────────────────────────────────────
+function edTransformCase(type) {
+  const ta = document.getElementById('editor');
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  if (s === e) return;
+  const sel = ta.value.slice(s, e);
+  const transformed = type === 'upper' ? sel.toUpperCase() : sel.toLowerCase();
+  ta.value = ta.value.slice(0, s) + transformed + ta.value.slice(e);
+  ta.setSelectionRange(s, s + transformed.length);
+  edChanged();
+}
+
+// ── Toggle word wrap ──────────────────────────────────────────────────────────
+let _wordWrap = false;
+function edToggleWordWrap() {
+  _wordWrap = !_wordWrap;
+  const ta = document.getElementById('editor');
+  ta.style.whiteSpace = _wordWrap ? 'pre-wrap' : 'pre';
+  ta.style.overflowX  = _wordWrap ? 'hidden' : 'auto';
+  notify('Word wrap ' + (_wordWrap ? 'ON' : 'OFF'), 'info');
+}
+
+// ── Select next occurrence (Ctrl+D) ──────────────────────────────────────────
+function edSelectNextOccurrence() {
+  const ta = document.getElementById('editor');
+  const s = ta.selectionStart, e = ta.selectionEnd;
+  const word = s === e ? edWordAt(ta, s) : ta.value.slice(s, e);
+  if (!word) return;
+  const from = e;
+  const idx = ta.value.indexOf(word, from);
+  if (idx === -1) {
+    // Wrap around
+    const idx2 = ta.value.indexOf(word, 0);
+    if (idx2 !== -1) ta.setSelectionRange(idx2, idx2 + word.length);
+  } else {
+    ta.setSelectionRange(idx, idx + word.length);
+  }
+  // Scroll into view
+  const lineH = ta.scrollHeight / (ta.value.split('\n').length || 1);
+  const lineNum = ta.value.slice(0, ta.selectionStart).split('\n').length;
+  ta.scrollTop = Math.max(0, (lineNum - 4) * lineH);
+}
+
+function edWordAt(ta, pos) {
+  const v = ta.value;
+  let l = pos, r = pos;
+  while (l > 0 && /\w/.test(v[l-1])) l--;
+  while (r < v.length && /\w/.test(v[r])) r++;
+  return v.slice(l, r);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── Find / Replace Widget ─────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+const _fw = { matches: [], idx: -1, opts: { case: false, word: false, regex: false } };
+
+function fwOpen(replace = false) {
+  const w = document.getElementById('find-widget');
+  const rr = document.getElementById('fw-replace-row');
+  const inp = document.getElementById('fw-find');
+  w.style.display = 'block';
+  rr.style.display = replace ? 'flex' : 'none';
+  // Pre-fill with selection
+  const ta = document.getElementById('editor');
+  const sel = ta.value.slice(ta.selectionStart, ta.selectionEnd);
+  if (sel && !sel.includes('\n')) inp.value = sel;
+  // Reset state before searching
+  _fw.matches = [];
+  _fw.idx = -1;
+  inp.focus();
+  inp.select();
+  fwSearch();
+}
+
+function fwClose() {
+  document.getElementById('find-widget').style.display = 'none';
+  fwClearHighlights();
+  _fw.matches = []; _fw.idx = -1;
+  document.getElementById('fw-count').textContent = '';
+  // Return focus to editor
+  if (edPanelActive()) editorEl.focus();
+}
+
+function fwToggle(opt) {
+  _fw.opts[opt] = !_fw.opts[opt];
+  const btn = document.getElementById('fw-btn-' + opt);
+  if (btn) {
+    btn.style.background = _fw.opts[opt] ? 'rgba(0,255,170,.15)' : 'transparent';
+    btn.style.borderColor = _fw.opts[opt] ? 'rgba(0,255,170,.5)' : 'transparent';
+    btn.style.color = _fw.opts[opt] ? '#00ffaa' : 'var(--text-muted)';
+  }
+  fwSearch();
+}
+
+function fwBuildRegex(q) {
+  if (!q) return null;
+  try {
+    let src = _fw.opts.regex ? q : q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if (_fw.opts.word) src = `\\b${src}\\b`;
+    return new RegExp(src, _fw.opts.case ? 'g' : 'gi');
+  } catch { return null; }
+}
+
+let _fwTimer = null;
+function fwSearchDebounced() {
+  clearTimeout(_fwTimer);
+  const countEl = document.getElementById('fw-count');
+  if (countEl) countEl.textContent = '...';
+  _fwTimer = setTimeout(() => fwSearch(), 150);
+}
+
+function fwSearch() {
+  _fwTimer = null;
+  const q = document.getElementById('fw-find').value;
+  const ta = document.getElementById('editor');
+  const countEl = document.getElementById('fw-count');
+
+  // Save current match position to try to stay near it
+  const prevStart = (_fw.matches[_fw.idx] || {}).start ?? -1;
+
+  _fw.matches = [];
+  _fw.idx = -1;
+
+  if (!q || !ta) {
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+  const re = fwBuildRegex(q);
+  if (!re) { if (countEl) countEl.textContent = 'bad regex'; return; }
+
+  let m;
+  while ((m = re.exec(ta.value)) !== null) {
+    _fw.matches.push({ start: m.index, end: m.index + m[0].length });
+    if (_fw.matches.length > 999) break;
+  }
+
+  if (!_fw.matches.length) {
+    if (countEl) countEl.textContent = 'No results';
+    return;
+  }
+
+  // Find closest match to previous position
+  if (prevStart >= 0) {
+    let best = 0, bestDist = Infinity;
+    for (let i = 0; i < _fw.matches.length; i++) {
+      const d = Math.abs(_fw.matches[i].start - prevStart);
+      if (d < bestDist) { bestDist = d; best = i; }
+    }
+    _fw.idx = best;
+  } else {
+    _fw.idx = 0;
+  }
+
+  fwJump();
+}
+
+function fwJump() {
+  if (!_fw.matches.length) return;
+  _fw.idx = ((_fw.idx % _fw.matches.length) + _fw.matches.length) % _fw.matches.length;
+  const m = _fw.matches[_fw.idx];
+  const ta = document.getElementById('editor');
+  const countEl = document.getElementById('fw-count');
+
+  // Select the match in editor without stealing focus from find input
+  ta.setSelectionRange(m.start, m.end);
+
+  // Scroll editor to show the match
+  const lines = ta.value.split('\n');
+  const lineNum = ta.value.slice(0, m.start).split('\n').length - 1;
+  const lineH = ta.scrollHeight / Math.max(lines.length, 1);
+  ta.scrollTop = Math.max(0, (lineNum - 4) * lineH);
+
+  if (countEl) countEl.textContent = `${_fw.idx + 1}/${_fw.matches.length}`;
+}
+
+function fwNext() { _fw.idx++; fwJump(); }
+function fwPrev() { _fw.idx--; fwJump(); }
+
+function fwClearHighlights() { /* textarea doesn't support DOM highlights — selection is enough */ }
+
+function fwReplaceOne() {
+  if (!_fw.matches.length) return;
+  const ta = document.getElementById('editor');
+  const rep = document.getElementById('fw-replace').value;
+  const m = _fw.matches[_fw.idx];
+  ta.value = ta.value.slice(0, m.start) + rep + ta.value.slice(m.end);
+  edChanged();
+  fwSearch();
+}
+
+function fwReplaceAll() {
+  const ta = document.getElementById('editor');
+  const q = document.getElementById('fw-find').value;
+  const rep = document.getElementById('fw-replace').value;
+  if (!q) return;
+  const re = fwBuildRegex(q);
+  if (!re) return;
+  const count = (ta.value.match(re) || []).length;
+  ta.value = ta.value.replace(re, rep);
+  edChanged();
+  fwSearch();
+  notify(`Replaced ${count} occurrence${count !== 1 ? 's' : ''}`, 'success');
+}
+
+function fwKeydown(e) {
+  e.stopPropagation();
+  if (e.key === 'Escape') { e.preventDefault(); fwClose(); return; }
+  if (e.ctrlKey && e.altKey && e.key === 'Enter') { e.preventDefault(); fwReplaceAll(); return; }
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    // Flush pending search first
+    if (_fwTimer) { clearTimeout(_fwTimer); fwSearch(); }
+    if (e.shiftKey) fwPrev(); else fwNext();
+  }
+}
+
+function fwReplaceKeydown(e) {
+  if (e.key === 'Enter') { e.preventDefault(); fwReplaceOne(); }
+  if (e.key === 'Escape') { e.preventDefault(); fwClose(); }
+  e.stopPropagation();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ── Go to Line Widget ─────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+function gotoOpen() {
+  const w = document.getElementById('goto-widget');
+  const inp = document.getElementById('goto-input');
+  const ta = document.getElementById('editor');
+  w.style.display = 'block';
+  const total = ta.value.split('\n').length;
+  const cur = ta.value.slice(0, ta.selectionStart).split('\n').length;
+  document.getElementById('goto-info').textContent = `of ${total}`;
+  inp.value = cur;
+  inp.focus(); inp.select();
+}
+
+function gotoClose() {
+  document.getElementById('goto-widget').style.display = 'none';
+  if (edPanelActive()) editorEl.focus();
+}
+
+function gotoPreview(val) {
+  const ta = document.getElementById('editor');
+  const lines = ta.value.split('\n');
+  const n = Math.max(1, Math.min(parseInt(val) || 1, lines.length));
+  document.getElementById('goto-info').textContent = `of ${lines.length}`;
+  jumpToLine(n);
+}
+
+function gotoKeydown(e) {
+  e.stopPropagation();
+  if (e.key === 'Enter') { e.preventDefault(); gotoClose(); }
+  if (e.key === 'Escape') { e.preventDefault(); gotoClose(); }
+}
+
+document.getElementById('editor').addEventListener('scroll', function() {
+  document.getElementById('line-nums').scrollTop = this.scrollTop;
+});
+
+document.getElementById('editor').addEventListener('click', updateLineNumbers);
+document.getElementById('editor').addEventListener('keyup', updateLineNumbers);
+</script>
+<script>
+// ── MULTI-TERMINAL SYSTEM ─────────────────────────────────────────────────────
+let terminals = [];      // [{id, el, outputEl, inputEl, promptEl, hist, hidx, cwd}]
+let activeTermId = null;
+let _runAbortCtrl = null; // AbortController for stopping execution
+let _isRunning = false;
+
+function getActiveTerm() { return terminals.find(t => t.id === activeTermId); }
+
+// Proxy helpers — always operate on active terminal
+function tprint(cls, txt) {
+  const t = getActiveTerm(); if (!t) return;
+  const d = document.createElement('div');
+  d.className = 'ln ' + cls;
+  d.textContent = txt;
+  t.outputEl.appendChild(d);
+  t.outputEl.scrollTop = t.outputEl.scrollHeight;
+}
+
+function updPrompt() {
+  const t = getActiveTerm(); if (!t) return;
+  t.promptEl.textContent = 'user@lab:' + vfs.cwd.replace('/workspace', '~') + '$ ';
+}
+
+function clearActiveTerminal() {
+  const t = getActiveTerm(); if (!t) return;
+  t.outputEl.innerHTML = '';
+}
+
+// ── Create a new terminal instance ───────────────────────────────────────────
+function addTerminal() {
+  const id = 'term-' + Date.now();
+  const idx = terminals.length + 1;
+
+  // Create DOM — use contenteditable div instead of input to prevent Chrome password popup
+  const inst = document.createElement('div');
+  inst.className = 'term-instance';
+  inst.id = id;
+  inst.innerHTML = `
+    <div class="term-output" id="${id}-out"></div>
+    <div class="term-input-row">
+      <span class="term-prompt" id="${id}-prompt">user@lab:~$ </span>
+      <div class="term-input" id="${id}-input"
+        contenteditable="true" role="textbox" spellcheck="false"
+        autocorrect="off" autocapitalize="off" aria-label="Terminal input"></div>
+    </div>
+  `;
+  document.getElementById('term-body').appendChild(inst);
+
+  const outputEl = document.getElementById(`${id}-out`);
+  const ceDiv    = document.getElementById(`${id}-input`);
+  const promptEl = document.getElementById(`${id}-prompt`);
+
+  // Wrap contenteditable div to behave like an input
+  const inputEl = {
+    _el: ceDiv,
+    get value() { return ceDiv.innerText.replace(/\n/g, ''); },
+    set value(v) { ceDiv.innerText = v; _moveCursorToEnd(ceDiv); },
+    focus() { ceDiv.focus(); _moveCursorToEnd(ceDiv); },
+    blur() { ceDiv.blur(); },
+    get disabled() { return ceDiv.getAttribute('contenteditable') === 'false'; },
+    set disabled(v) {
+      ceDiv.setAttribute('contenteditable', v ? 'false' : 'true');
+      ceDiv.style.opacity = v ? '0.4' : '1';
+      ceDiv.style.pointerEvents = v ? 'none' : '';
+    },
+    addEventListener(ev, fn, opt) { ceDiv.addEventListener(ev, fn, opt); },
+    dispatchEvent(ev) { ceDiv.dispatchEvent(ev); },
+  };
+
+  function _moveCursorToEnd(el) {
+    try {
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(el);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    } catch {}
+  }
+
+  const term = { id, idx, outputEl, inputEl, promptEl, hist: [], hidx: -1 };
+  terminals.push(term);
+
+  // Bind keydown — handle Enter, arrows, Tab, Ctrl+C
+  ceDiv.addEventListener('keydown', e => {
+    // Prevent newline on Enter
+    if (e.key === 'Enter') e.preventDefault();
+    handleTermInput(e, term);
+  });
+
+  // Prevent paste of rich text
+  ceDiv.addEventListener('paste', e => {
+    e.preventDefault();
+    const text = (e.clipboardData || window.clipboardData).getData('text/plain');
+    document.execCommand('insertText', false, text);
+  });
+
+  // Switch to new terminal
+  switchTerminal(id);
+
+  // Print welcome only for first terminal
+  if (terminals.length === 1) {
+    _printWelcome(term);
+  } else {
+    _tprintTo(term, 'info', `Terminal ${idx} — វាយ "help" ដើម្បីមើលពាក្យបញ្ជា`);
+    _tprintTo(term, 'dim', '─'.repeat(40));
+  }
+
+  ceDiv.focus();
+  updateCloseBtn();
+  return term;
+}
+
+function _tprintTo(term, cls, txt) {
+  const d = document.createElement('div');
+  d.className = 'ln ' + cls;
+  d.textContent = txt;
+  term.outputEl.appendChild(d);
+  term.outputEl.scrollTop = term.outputEl.scrollHeight;
+}
+
+function _printWelcome(term) {
+  _tprintTo(term, 'info', 'Genz Dev Terminal - វាយ "help" ដើម្បីមើលពាក្យបញ្ជា');
+  _tprintTo(term, 'dim', 'គាំទ្រ: JS TS Python C C++ Java Go Rust PHP Ruby Kotlin Swift R Lua Bash C# SQL HTML');
+  _tprintTo(term, 'dim', 'រត់: node <file> | python <file> | run <file> | open <file>');
+  // Show rate limit info — read _authUser directly (set by _loadAuth before addTerminal)
+  const u = typeof _authUser !== 'undefined' ? _authUser : null;
+  if (u) {
+    const lab = u.lab || {};
+    if (lab.unlimited) {
+      _tprintTo(term, 'success', `👤 ${u.name} — ♾ Unlimited runs`);
+    } else {
+      const rem = Math.max(0, (lab.limit || 15) - (lab.used || 0));
+      _tprintTo(term, 'info', `👤 ${u.name} — used ${lab.used || 0}/${lab.limit || 15} ដង/ថ្ងៃ (${rem} remaining)`);
+    }
+  } else {
+    // Guest: load from localStorage directly
+    try {
+      const rlData = JSON.parse(localStorage.getItem('genz_rl_v1') || '{}');
+      const calls = (rlData.calls || []).filter(t => Date.now() - t < 86400000);
+      const rem = Math.max(0, 5 - calls.length);
+      _tprintTo(term, 'warn', `🔓 Guest — ${rem}/5 ដង/ថ្ងៃ  →  វាយ "login" ដើម្បីទទួល 15 ដង`);
+    } catch {
+      _tprintTo(term, 'warn', `🔓 Guest — 5/5 ដង/ថ្ងៃ  →  វាយ "login" ដើម្បីទទួល 15 ដង`);
+    }
+  }
+  _tprintTo(term, 'dim', '─'.repeat(50));
+}
+
+// ── Switch active terminal ────────────────────────────────────────────────────
+function switchTerminal(id) {
+  activeTermId = id;
+  // Update instances visibility
+  document.querySelectorAll('.term-instance').forEach(el => el.classList.remove('active'));
+  const inst = document.getElementById(id);
+  if (inst) inst.classList.add('active');
+  // Update tabs
+  renderTermTabs();
+  // Focus input
+  const t = getActiveTerm();
+  if (t) { t.inputEl.focus(); updPrompt(); }
+}
+
+// ── Close terminal ────────────────────────────────────────────────────────────
+function closeTerminal(id) {
+  if (terminals.length <= 1) return; // keep at least 1
+  const t = terminals.find(x => x.id === id);
+  if (!t) return;
+
+  // Remove DOM element
+  const instEl = document.getElementById(id);
+  if (instEl) instEl.remove();
+
+  // Remove from array
+  terminals = terminals.filter(x => x.id !== id);
+
+  // Switch to another terminal if this was active
+  if (activeTermId === id) {
+    activeTermId = null;
+    const next = terminals[terminals.length - 1];
+    if (next) switchTerminal(next.id);
+  } else {
+    renderTermTabs();
+  }
+  updateCloseBtn();
+}
+
+function closeActiveTerminal() {
+  if (activeTermId) closeTerminal(activeTermId);
+}
+
+function updateCloseBtn() {
+  const btn = document.getElementById('close-term-btn');
+  if (btn) btn.style.display = terminals.length <= 1 ? 'none' : 'flex';
+}
+
+// ── Render terminal tabs ──────────────────────────────────────────────────────
+function renderTermTabs() {
+  const el = document.getElementById('term-tabs-list');
+  if (!el) return;
+  el.innerHTML = terminals.map(t => `
+    <span class="ttab${t.id === activeTermId ? ' active' : ''}"
+      onclick="event.stopPropagation();switchTerminal('${t.id}')">
+      Terminal ${t.idx}
+      ${terminals.length > 1 ? `<button
+        onclick="event.stopPropagation();closeTerminal('${t.id}')"
+        title="Close terminal"
+        style="margin-left:6px;background:transparent;border:none;color:inherit;cursor:pointer;
+               font-size:13px;line-height:1;padding:0 2px;border-radius:3px;opacity:.6;vertical-align:middle"
+        onmouseover="this.style.opacity=1;this.style.background='rgba(255,255,255,0.15)'"
+        onmouseout="this.style.opacity=.6;this.style.background='transparent'">×</button>` : ''}
+    </span>
+  `).join('');
+  updateCloseBtn();
+}
+
+// ── Stop execution ────────────────────────────────────────────────────────────
+function stopExecution() {
+  if (_runAbortCtrl) { _runAbortCtrl.abort(); _runAbortCtrl = null; }
+  _isRunning = false;
+  document.getElementById('stop-btn').style.display = 'none';
+  tprint('warn', '^C  Execution stopped');
+  updPrompt();
+}
+
+function setRunning(running) {
+  _isRunning = running;
+  const btn = document.getElementById('stop-btn');
+  if (btn) btn.style.display = running ? 'flex' : 'none';
+  const t = getActiveTerm();
+  if (t) t.inputEl.disabled = running;
+}
+
+// ── Handle terminal input ─────────────────────────────────────────────────────
+function handleTermInput(e, term) {
+  if (e.key === 'Enter') {
+    const cmd = term.inputEl.value;
+    term.inputEl.value = '';
+    const trimmed = cmd.trim();
+    if (trimmed) {
+      term.hist.unshift(trimmed);
+      if (term.hist.length > 500) term.hist.pop();
+      term.hidx = -1;
+    }
+    _tprintTo(term, 'cmd', term.promptEl.textContent + cmd);
+    if (trimmed) {
+      // Switch to this terminal if not active
+      if (activeTermId !== term.id) switchTerminal(term.id);
+      runCmd(trimmed);
+    }
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (term.hidx < term.hist.length - 1) { term.hidx++; term.inputEl.value = term.hist[term.hidx] || ''; }
+  } else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (term.hidx > 0) { term.hidx--; term.inputEl.value = term.hist[term.hidx]; }
+    else { term.hidx = -1; term.inputEl.value = ''; }
+  } else if (e.key === 'Tab') {
+    e.preventDefault();
+    doTab(term);
+  } else if (e.key === 'c' && e.ctrlKey) {
+    e.preventDefault();
+    stopExecution();
+  }
+}
+
+function doTab(term) {
+  const parts = term.inputEl.value.split(' ');
+  if (parts.length < 2) return;
+  const last = parts[parts.length - 1];
+  const items = listDir(vfs, vfs.cwd).map(i => i.name);
+  const m = items.filter(n => n.startsWith(last));
+  if (m.length === 1) { parts[parts.length - 1] = m[0]; term.inputEl.value = parts.join(' '); }
+  else if (m.length > 1) tprint('dim', m.join('  '));
+}
+
+function runCmd(raw) {
+  if (!tRL.ok()) { tprint('err', 'Rate limit. Wait a moment.'); return; }
+  const parts = raw.trim().split(/\s+/);
+  const cmd = parts[0], args = parts.slice(1);
+
+  const cmds = {
+    help() {
+      tprint('info', 'ពាក័បញ្ជាត័ត្រួវប្រើប្រាស់:');
+      [
+        ['ls [dir]',                    'បង័ហាញឡកសារក្នុងថត'],
+        ['cd <dir>',                    'ប័តូរថត'],
+        ['pwd',                         'បង័ហាញតីតាងបច្ចុប្បន្ន'],
+        ['cat <file>',                  'បង័ហាញមាតិកាឡកសារ'],
+        ['echo <text>',                 'បោហ័ពុម័ពអត្ថបត'],
+        ['touch <file>',                'បង័កើតឡកសារ'],
+        ['mkdir <dir>',                 'បង័កើតថត'],
+        ['rm <path>',                   'លុបឡកសារ/ថត'],
+        ['mv <src> <dst>',              'ផ្លាស័តី/ប័តូរឡ័មោះ'],
+        ['cp <src> <dst>',              'ចម្លង'],
+        ['write <file> <text>',         'សរសើរតឹឡកសារ'],
+        ['append <file> <text>',        'បន័ថើមតឹឡកសារ'],
+        ['node <file>',                 'រត័ JS/TS'],
+        ['python <file>',               'រត័ Python'],
+        ['run <file>',                  'រត័ភាសាណាមួយ (auto)'],
+        ['java/gcc/go/php/ruby <file>', 'រត័ភាសាជាក័លាក័'],
+        ['open <file>',                 'បើកក្នុង Editor'],
+        ['clear',                       'សម័អាត Terminal'],
+        ['whoami',                      'ព័ត៌មានអ្នកប្រើ'],
+        ['login',                       'Login / Register'],
+        ['logout',                      'Logout'],
+        ['date',                        'កាលបរិច្ឆើត/ម័ោង'],
+        ['history',                     'ប័វត័តិពាក័បញ្ជា'],
+        ['download [file]',             'ទាញយកឯកសារទៅ PC/ទូរស័ព្ទ'],
+        ['save',                        'ទាញយកឯកសារដែលបើកក្នុង Editor'],
+        ['export',                      'Export workspace ទាំងអស់ (.zip)'],
+      ].forEach(([c, d]) => tprint('dim', '  ' + c.padEnd(28) + d));
+      tprint('dim', '');
+      tprint('dim', 'Ctrl+S រក័សាតុក | Ctrl+` Terminal | Ctrl+N ថ្មី | Ctrl+W បិត | Ctrl+Shift+F ស័វើងរក');
+    },
+    clear() { clearActiveTerminal(); },
+    pwd() { tprint('out', vfs.cwd); },
+    whoami() {
+      const u = typeof _authUser !== 'undefined' ? _authUser : null;
+      if (u) {
+        tprint('success', `👤 ${u.name} (${u.email})`);
+        tprint('dim', `   ID: ${u.userId || '-'}`);
+        if (u.lab?.unlimited) {
+          tprint('info', '   Runs: ♾ Unlimited');
+        } else {
+          const rem = Math.max(0, (u.lab?.limit || 15) - (u.lab?.used || 0));
+          tprint('info', `   Runs: used ${u.lab?.used || 0}/${u.lab?.limit || 15} (${rem} remaining)`);
+        }
+      } else {
+        tprint('out', '🔓 Guest (មិនទាន់ Login)');
+        try {
+          const d = JSON.parse(localStorage.getItem('genz_rl_v1') || '{}');
+          const calls = (d.calls || []).filter(t => Date.now() - t < 86400000);
+          tprint('dim', `   Runs: ${Math.max(0, 5 - calls.length)}/5 ដង/ថ្ងៃ`);
+        } catch {}
+        tprint('dim', '   វាយ "login" ដើម្បីចូលគណនី');
+      }
+    },
+    login() { openAuthModal('login'); tprint('dim', 'Opening login...'); },
+    logout() {
+      if (typeof _authUser !== 'undefined' && _authUser) {
+        doLogout(); tprint('success', '👋 Logged out');
+      } else {
+        tprint('warn', 'You are not logged in');
+      }
+    },
+    date() { tprint('out', new Date().toLocaleString()); },
+    history() {
+      const t = getActiveTerm();
+      (t ? t.hist : []).slice(0, 30).forEach((h, i) => tprint('dim', '  ' + (i + 1) + '  ' + h));
+    },
+    echo() { tprint('out', args.join(' ')); },
+    ls() {
+      const flag = args.find(a => a.startsWith('-'));
+      const dir = args.find(a => !a.startsWith('-'));
+      const p = dir ? resolvePath(vfs.cwd, dir) : vfs.cwd;
+      if (!isDir(vfs, p)) return tprint('err', 'ls: not a directory: ' + (dir || p));
+      const items = listDir(vfs, p).sort((a, b) => a.isDir === b.isDir ? a.name.localeCompare(b.name) : a.isDir ? -1 : 1);
+      if (!items.length) return tprint('dim', '(empty)');
+      if (flag && flag.includes('l')) {
+        items.forEach(({ name, path: ip, isDir: d }) => {
+          const n = vfs.nodes[ip];
+          const size = d ? '-' : (getContent(vfs, ip) || '').length + ' B';
+          const date = n?.m ? new Date(n.m).toLocaleTimeString() : '-';
+          tprint('out', (d ? 'drwxr-xr-x' : '-rw-r--r--') + '  ' + size.toString().padStart(8) + '  ' + date + '  ' + name);
+        });
+      } else {
+        tprint('out', items.map(i => (i.isDir ? '[D] ' : '') + i.name).join('   '));
+      }
+    },
+    cd() {
+      const p = resolvePath(vfs.cwd, args[0] || '~');
+      if (!isDir(vfs, p)) return tprint('err', 'cd: not a directory: ' + (args[0] || '~'));
+      vfs.cwd = p;
+      saveVFS(vfs);
+      updPrompt();
+    },
+    cat() {
+      if (!args[0]) return tprint('err', 'cat: missing operand');
+      const p = resolvePath(vfs.cwd, args[0]);
+      if (isDir(vfs, p)) return tprint('err', 'cat: is a directory');
+      const c = getContent(vfs, p);
+      if (c === null) return tprint('err', 'cat: no such file: ' + args[0]);
+      c.split('\n').forEach(l => tprint('out', l));
+    },
+    touch() {
+      if (!args[0]) return tprint('err', 'touch: missing operand');
+      const p = resolvePath(vfs.cwd, args[0]);
+      if (!vfs.nodes[p]) {
+        vfs.nodes[p] = { c: '', m: Date.now() };
+        saveVFS(vfs);
+        renderTree();
+      }
+    },
+    mkdir() {
+      if (!args[0]) return tprint('err', 'mkdir: missing operand');
+      const p = resolvePath(vfs.cwd, args[0]);
+      if (vfs.nodes[p]) return tprint('err', 'mkdir: already exists');
+      vfs.nodes[p] = 'd';
+      saveVFS(vfs);
+      renderTree();
+    },
+    rm() {
+      if (!args[0]) return tprint('err', 'rm: missing operand');
+      const p = resolvePath(vfs.cwd, args[0]);
+      if (!vfs.nodes[p]) return tprint('err', 'rm: no such file: ' + args[0]);
+      Object.keys(vfs.nodes).filter(k => k === p || k.startsWith(p + '/')).forEach(k => delete vfs.nodes[k]);
+      saveVFS(vfs);
+      renderTree();
+      openTabs = openTabs.filter(t => t.path !== p);
+      renderTabs();
+    },
+    mv() {
+      if (!args[0] || !args[1]) return tprint('err', 'mv: missing operand');
+      const s = resolvePath(vfs.cwd, args[0]), d = resolvePath(vfs.cwd, args[1]);
+      if (!vfs.nodes[s]) return tprint('err', 'mv: no such file: ' + args[0]);
+      vfs.nodes[d] = vfs.nodes[s];
+      delete vfs.nodes[s];
+      saveVFS(vfs);
+      renderTree();
+    },
+    cp() {
+      if (!args[0] || !args[1]) return tprint('err', 'cp: missing operand');
+      const s = resolvePath(vfs.cwd, args[0]), d = resolvePath(vfs.cwd, args[1]);
+      if (!vfs.nodes[s]) return tprint('err', 'cp: no such file: ' + args[0]);
+      const n = vfs.nodes[s];
+      vfs.nodes[d] = typeof n === 'string' ? n : { ...n, m: Date.now() };
+      saveVFS(vfs);
+      renderTree();
+    },
+    write() {
+      if (!args[0]) return tprint('err', 'write: missing operand');
+      const p = resolvePath(vfs.cwd, args[0]);
+      const content = args.slice(1).join(' ');
+      setContent(vfs, p, content);
+      saveVFS(vfs);
+      renderTree();
+      tprint('dim', 'Written ' + content.length + ' chars to ' + args[0]);
+    },
+    append() {
+      if (args.length < 2) return tprint('err', 'append: missing operand');
+      const p = resolvePath(vfs.cwd, args[0]);
+      const existing = getContent(vfs, p) || '';
+      setContent(vfs, p, existing + (existing ? '\n' : '') + args.slice(1).join(' '));
+      saveVFS(vfs);
+      tprint('dim', 'Appended to ' + args[0]);
+    },
+    // download <file> — save file to device
+    download() {
+      const target = args[0];
+      if (!target) {
+        // If no arg, download active file
+        if (!activeTab) return tprint('err', 'download: specify a file or open one in editor');
+        return _downloadPath(activeTab);
+      }
+      const p = resolvePath(vfs.cwd, target);
+      _downloadPath(p);
+    },
+    // save — alias for download active file
+    save() {
+      if (!activeTab) return tprint('err', 'save: no file open in editor');
+      _downloadPath(activeTab);
+    },
+    // export — download all workspace files as zip (uses JSZip if available)
+    export: async function() {
+      await _exportWorkspace();
+    },
+    open() {
+      if (!args[0]) return tprint('err', 'open: missing operand');
+      const p = resolvePath(vfs.cwd, args[0]);
+      if (!vfs.nodes[p] || isDir(vfs, p)) return tprint('err', 'open: not a file: ' + args[0]);
+      openFile(p);
+      tprint('dim', 'Opened: ' + args[0]);
+    },
+    node: async function() {
+      if (!args[0]) return tprint('err', 'Usage: node <file.js|.ts>');
+      await runFile(resolvePath(vfs.cwd, args[0]));
+    },
+    python: async function() {
+      if (!args[0]) return tprint('err', 'Usage: python <file.py>');
+      await runFile(resolvePath(vfs.cwd, args[0]));
+    },
+    run: async function() {
+      if (!args[0]) return tprint('err', 'Usage: run <file>');
+      await runFile(resolvePath(vfs.cwd, args[0]));
+    },
+    // ── Language shortcuts + aliases ──────────────────────────────────────────
+    // Helper: find filename from args (skip keywords like 'run', 'build')
+    ...(() => {
+      const SKIP = new Set(['run','build','exec','compile','start','main']);
+      const getFile = () => args.find(a => a.includes('.') && !SKIP.has(a)) || args.find(a => !SKIP.has(a));
+      const mkRunner = (usage) => async function() {
+        const f = getFile();
+        if (!f) return tprint('err', 'Usage: ' + usage);
+        await runFile(resolvePath(vfs.cwd, f));
+      };
+      return {
+        // Go: go run file.go | go file.go | go build file.go
+        go:       mkRunner('go run <file.go>'),
+        // Java: java Main.java | javac Main.java
+        java:     mkRunner('java <file.java>'),
+        javac:    mkRunner('javac <file.java>'),
+        // C/C++
+        gcc:      mkRunner('gcc <file.c>'),
+        cc:       mkRunner('cc <file.c>'),
+        'g++':    mkRunner('g++ <file.cpp>'),
+        gpp:      mkRunner('g++ <file.cpp>'),
+        cpp:      mkRunner('cpp <file.cpp>'),
+        // Rust
+        rustc:    mkRunner('rustc <file.rs>'),
+        cargo:    mkRunner('cargo run <file.rs>'),
+        // PHP
+        php:      mkRunner('php <file.php>'),
+        // Ruby
+        ruby:     mkRunner('ruby <file.rb>'),
+        // Bash/Shell
+        bash:     mkRunner('bash <file.sh>'),
+        sh:       mkRunner('sh <file.sh>'),
+        // Lua
+        lua:      mkRunner('lua <file.lua>'),
+        // Kotlin
+        kotlinc:  mkRunner('kotlinc <file.kt>'),
+        kotlin:   mkRunner('kotlin <file.kt>'),
+        // Swift
+        swift:    mkRunner('swift <file.swift>'),
+        swiftc:   mkRunner('swiftc <file.swift>'),
+        // R
+        rscript:  mkRunner('Rscript <file.r>'),
+        Rscript:  mkRunner('Rscript <file.r>'),
+        // C#
+        mcs:      mkRunner('mcs <file.cs>'),
+        dotnet:   mkRunner('dotnet run <file.cs>'),
+        // SQL
+        sqlite3:  mkRunner('sqlite3 <file.sql>'),
+        sql:      mkRunner('sql <file.sql>'),
+        // Perl
+        perl:     mkRunner('perl <file.pl>'),
+      };
+    })(),
+  };
+
+  const fn = cmds[cmd];
+  if (fn) {
+    const r = fn();
+    if (r && r.then) r.then(() => updPrompt());
+  } else {
+    tprint('err', 'Command not found: ' + cmd + '  (type "help")');
+  }
+  updPrompt();
+}
+
+// ── Download helpers ──────────────────────────────────────────────────────────
+function _downloadPath(filePath) {
+  const node = vfs.nodes[filePath];
+  if (!node || isDir(vfs, filePath)) {
+    tprint('err', `download: "${filePath.split('/').pop()}" is not a file`);
+    return;
+  }
+  // If file is open in editor, use latest editor content
+  let content = '';
+  if (activeTab === filePath) {
+    const ta = document.getElementById('editor');
+    content = ta ? ta.value : (getContent(vfs, filePath) || '');
+  } else {
+    content = getContent(vfs, filePath) || '';
+  }
+  const name = filePath.split('/').pop();
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(url);
+  tprint('success', `⬇ ទាញយក "${name}" (${content.length} chars)`);
+}
+
+async function _exportWorkspace() {
+  // Collect all files
+  const files = Object.entries(vfs.nodes)
+    .filter(([p, n]) => n !== 'd' && typeof n !== 'string' && n?.c !== undefined)
+    .map(([p, n]) => ({ path: p.replace('/workspace/', ''), content: n.c || '' }));
+
+  if (files.length === 0) { tprint('err', 'export: no files found'); return; }
+
+  // Try JSZip
+  if (typeof JSZip === 'undefined') {
+    tprint('dim', 'Loading JSZip...');
+    await new Promise(r => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/jszip@3/dist/jszip.min.js';
+      s.onload = r; s.onerror = r;
+      document.head.appendChild(s);
+    });
+  }
+
+  if (typeof JSZip !== 'undefined') {
+    const zip = new JSZip();
+    files.forEach(f => zip.file(f.path, f.content));
+    const blob = await zip.generateAsync({ type: 'blob' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = 'genz-workspace.zip';
+    a.click();
+    URL.revokeObjectURL(url);
+    tprint('success', `⬇ Export ${files.length} files → genz-workspace.zip`);
+  } else {
+    // Fallback: download each file individually
+    tprint('warn', 'JSZip unavailable — downloading files individually...');
+    for (const f of files) {
+      const blob = new Blob([f.content], { type: 'text/plain' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url; a.download = f.path.split('/').pop();
+      a.click();
+      URL.revokeObjectURL(url);
+      await new Promise(r => setTimeout(r, 200));
+    }
+    tprint('success', `⬇ Downloaded ${files.length} files`);
+  }
+}
+
+// ── Language detection ────────────────────────────────────────────────────────
+const LANG_MAP = {
+  js: 'javascript', ts: 'typescript', py: 'python', rb: 'ruby',
+  php: 'php', c: 'c', cpp: 'cpp', cs: 'csharp', java: 'java',
+  go: 'go', rs: 'rust', kt: 'kotlin', swift: 'swift', r: 'r',
+  lua: 'lua', perl: 'perl', sh: 'bash', bash: 'bash',
+  html: 'html', css: 'css', sql: 'sqlite3',
+};
+
+function detectLang(filename) {
+  const ext = filename.split('.').pop()?.toLowerCase() || '';
+  return LANG_MAP[ext] || null;
+}
+
+// ── JS execution (iframe sandbox) ────────────────────────────────────────────
+function execJS(code) {
+  return new Promise(resolve => {
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('sandbox', 'allow-scripts');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    const cleanup = () => { try { document.body.removeChild(iframe); } catch {} resolve(); };
+    const tid = setTimeout(() => { tprint('err', '[timeout] Execution exceeded 10s'); cleanup(); }, 10000);
+
+    const handler = e => {
+      if (e.source !== iframe.contentWindow) return;
+      const { type, data } = e.data || {};
+      if (type === 'log')  tprint('out',  String(data).slice(0, 5000));
+      else if (type === 'warn') tprint('warn', '⚠ ' + String(data));
+      else if (type === 'err')  tprint('err',  '✗ ' + String(data));
+      else if (type === 'done') { window.removeEventListener('message', handler); clearTimeout(tid); cleanup(); }
+    };
+    window.addEventListener('message', handler);
+
+    iframe.srcdoc = `<!DOCTYPE html><html><body><script>
+(function(){
+  const P=window.parent;
+  const fmt=(...a)=>a.map(x=>{
+    if(x===null)return'null';
+    if(x===undefined)return'undefined';
+    if(typeof x==='object'){try{return JSON.stringify(x,null,2);}catch{return String(x);}}
+    return String(x);
+  }).join(' ');
+  window.console={
+    log:(...a)=>P.postMessage({type:'log',data:fmt(...a)},'*'),
+    warn:(...a)=>P.postMessage({type:'warn',data:fmt(...a)},'*'),
+    error:(...a)=>P.postMessage({type:'err',data:fmt(...a)},'*'),
+    info:(...a)=>P.postMessage({type:'log',data:'ℹ '+fmt(...a)},'*'),
+    table:(d)=>P.postMessage({type:'log',data:JSON.stringify(d,null,2)},'*'),
+    dir:(d)=>P.postMessage({type:'log',data:JSON.stringify(d,null,2)},'*'),
+  };
+  window.alert=(...a)=>P.postMessage({type:'log',data:'[alert] '+fmt(...a)},'*');
+  window.prompt=()=>null; window.confirm=()=>false;
+  try{
+    ${code}
+    P.postMessage({type:'done'},'*');
+  }catch(e){
+    P.postMessage({type:'err',data:(e.stack||e.message||String(e))},'*');
+    P.postMessage({type:'done'},'*');
+  }
+})();
+<\/script></body></html>`;
+  });
+}
+
+// ── TypeScript execution (transpile → JS) ─────────────────────────────────────
+async function execTS(code) {
+  // Load TypeScript compiler
+  if (typeof ts === 'undefined') {
+    tprint('dim', 'Loading TypeScript compiler...');
+    await new Promise(r => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/typescript@5/lib/typescript.js';
+      s.onload = r; s.onerror = () => { tprint('err', 'Failed to load TypeScript'); r(); };
+      document.head.appendChild(s);
+    });
+  }
+  if (typeof ts === 'undefined') { tprint('err', 'TypeScript unavailable'); return; }
+  try {
+    const result = ts.transpileModule(code, { compilerOptions: { target: ts.ScriptTarget.ES2020 } });
+    await execJS(result.outputText);
+  } catch (e) { tprint('err', '✗ TS: ' + e.message); }
+}
+
+// ── HTML preview ──────────────────────────────────────────────────────────────
+function execHTML(code) {
+  // Open preview in new tab
+  const blob = new Blob([code], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+  tprint('info', '🌐 HTML preview opened in new tab');
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+}
+
+// ── Python (Pyodide — real CPython) ──────────────────────────────────────────
+async function execPy(code) {
+  // Try Pyodide first (full Python), fallback to Skulpt
+  if (typeof loadPyodide !== 'undefined' || window._pyodide) {
+    await execPyodide(code);
+  } else {
+    await execSkulpt(code);
+  }
+}
+
+async function execPyodide(code) {
+  if (!window._pyodide) {
+    tprint('dim', 'Loading Pyodide (full Python)... ~10MB first time');
+    try {
+      if (typeof loadPyodide === 'undefined') {
+        await new Promise(r => {
+          const s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
+          s.onload = r; s.onerror = r;
+          document.head.appendChild(s);
+        });
+      }
+      window._pyodide = await loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/' });
+      // Redirect stdout/stderr
+      window._pyodide.runPython(`
+import sys, io
+class _Out:
+    def __init__(self, cb): self.cb = cb
+    def write(self, s):
+        if s: self.cb(s)
+    def flush(self): pass
+`);
+    } catch (e) {
+      tprint('warn', 'Pyodide failed, using Skulpt...');
+      await execSkulpt(code); return;
+    }
+  }
+  try {
+    const py = window._pyodide;
+    let out = '';
+    py.globals.set('_print_cb', (s) => { tprint('out', s.replace(/\n$/, '')); });
+    py.runPython(`
+import sys, io
+class _CB:
+    def write(self, s):
+        if s.strip(): _print_cb(s)
+    def flush(self): pass
+sys.stdout = _CB()
+sys.stderr = _CB()
+`);
+    py.runPython(code);
+  } catch (e) {
+    tprint('err', '✗ ' + String(e).split('\n').pop());
+  }
+}
+
+async function execSkulpt(code) {
+  if (typeof Sk === 'undefined') {
+    tprint('dim', 'Loading Python (Skulpt)...');
+    await new Promise(r => {
+      const s = document.createElement('script');
+      s.src = 'https://skulpt.org/js/skulpt.min.js';
+      s.onload = () => {
+        const s2 = document.createElement('script');
+        s2.src = 'https://skulpt.org/js/skulpt-stdlib.js';
+        s2.onload = r; s2.onerror = r;
+        document.head.appendChild(s2);
+      };
+      s.onerror = () => { tprint('err', 'Failed to load Python'); r(); };
+      document.head.appendChild(s);
+    });
+  }
+  if (typeof Sk === 'undefined') { tprint('err', 'Python unavailable'); return; }
+  let n = 0;
+  Sk.configure({
+    output(t) { if (n++ < 2000) tprint('out', t.replace(/\n$/, '')); },
+    read(x) { if (Sk.builtinFiles?.files[x]) return Sk.builtinFiles.files[x]; throw new Error('File not found: ' + x); },
+    execLimit: 10000,
+  });
+  try {
+    await Sk.misceval.asyncToPromise(() => Sk.importMainWithBody('<stdin>', false, code, true));
+    if (n === 0) tprint('dim', '(no output)');
+  } catch (e) { tprint('err', '✗ ' + (e.toString ? e.toString() : String(e))); }
+}
+
+// ── Piston API (C, C++, Java, Go, Rust, PHP, Ruby, etc.) ─────────────────────
+const PISTON_LANGS = {
+  c:       { language: 'c',          version: '10.2.0' },
+  cpp:     { language: 'c++',        version: '10.2.0' },
+  java:    { language: 'java',       version: '15.0.2' },
+  go:      { language: 'go',         version: '1.16.2'  },
+  rust:    { language: 'rust',       version: '1.50.0'  },
+  ruby:    { language: 'ruby',       version: '3.0.1'   },
+  php:     { language: 'php',        version: '8.0.2'   },
+  kotlin:  { language: 'kotlin',     version: '1.4.31'  },
+  swift:   { language: 'swift',      version: '5.3.3'   },
+  r:       { language: 'r',          version: '4.1.1'   },
+  lua:     { language: 'lua',        version: '5.4.4'   },
+  perl:    { language: 'perl',       version: '5.36.0'  },
+  bash:    { language: 'bash',       version: '5.2.0'   },
+  csharp:  { language: 'csharp',     version: '6.12.0'  },
+  sqlite3: { language: 'sqlite3',    version: '3.36.0'  },
+};
+
+// ── Rate Limit: 15 runs/day (persisted in localStorage) ─────────────────────
+const _RL_KEY   = 'genz_rl_v1';
+const _RL_LIMIT = 15;
+const _RL_DAY   = 86400000; // 24h in ms
+
+const _apiRL = {
+  _load() {
+    try {
+      const d = JSON.parse(localStorage.getItem(_RL_KEY) || '{}');
+      // calls = array of timestamps within last 24h
+      this.calls = (d.calls || []).filter(t => Date.now() - t < _RL_DAY);
+    } catch { this.calls = []; }
+  },
+  _save() {
+    localStorage.setItem(_RL_KEY, JSON.stringify({ calls: this.calls }));
+  },
+
+  check() {
+    this._load();
+    const now = Date.now();
+    const used = this.calls.length;
+    if (used >= _RL_LIMIT) {
+      const oldest  = this.calls[0];
+      const resetMs = _RL_DAY - (now - oldest);
+      const resetHrs = Math.ceil(resetMs / 3600000);
+      const resetMin = Math.ceil(resetMs / 60000);
+      const timeStr  = resetHrs >= 1 ? `~${resetHrs} ម័ោង` : `~${resetMin} នាទី`;
+      return `ក្ណត់ ${_RL_LIMIT} តង/ថ្ង័ ហើតឡ័អស់ប័រើប័ន័នឹងថ័មី ${timeStr}`;
+    }
+    this.calls.push(now);
+    this._save();
+    return null; // ok
+  },
+
+  remaining() {
+    this._load();
+    return Math.max(0, _RL_LIMIT - this.calls.length);
+  },
+
+  used() {
+    this._load();
+    return this.calls.length;
+  }
+};
+
+// ── Piston API versions (updated) ────────────────────────────────────────────
+const PISTON_ENDPOINT = 'https://emkc.org/api/v2/piston/execute';
+
+async function execPiston(lang, code, filename) {
+  const cfg = PISTON_LANGS[lang];
+  if (!cfg) { tprint('err', `Language "${lang}" not supported`); return; }
+
+  tprint('dim', `⚙ កំពុង compile ${lang}...`);
+
+  try {
+    const res = await fetch('http://localhost:5000/api/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ lang, code }),
+      signal: _runAbortCtrl?.signal,
+    });
+
+    if (res.status === 501) {
+      const d = await res.json().catch(() => ({}));
+      tprint('warn', '⚠ ' + (d.error || 'Not available'));
+      tprint('dim', 'Tip: JS/TS/Python run client-side. Other languages need local install.');
+      return;
+    }
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      tprint('err', '✗ Server error: ' + (d.error || `HTTP ${res.status}`));
+      return;
+    }
+
+    const data = await res.json();
+    if (data.remaining !== undefined) tprint('dim', `(នៅសល់ ${data.remaining}/${data.limit ?? _RL_LIMIT} ដង/ថ្ងៃ)`);
+
+    const compile = (data.compile || '').trim();
+    const out  = (data.stdout || '').trim();
+    const err  = (data.stderr || '').trim();
+    const exit = data.exitCode;
+    const engine = data.engine || '';
+
+    if (engine) tprint('dim', `[${engine}]`);
+    if (compile) compile.split('\n').forEach(l => tprint('warn', l));
+    if (out)  out.split('\n').forEach(l => tprint('out', l));
+    if (err)  err.split('\n').forEach(l => tprint('err', '✗ ' + l));
+    if (!out && !err && !compile) tprint('dim', '(no output)');
+    if (exit !== 0 && exit !== undefined) tprint('warn', `Exit code: ${exit}`);
+
+  } catch (e) {
+    if (e.name === 'AbortError') { tprint('warn', '^C  Stopped'); }
+    else { tprint('err', '✗ Cannot reach server: ' + e.message); tprint('dim', 'Make sure server is running: cd server && npm run dev'); }
+  }
+}
+
+// ── Security Scanner ──────────────────────────────────────────────────────────
+const BLOCKED_PATTERNS = [
+  // DDoS patterns
+  { re: /while\s*\(\s*true\s*\)\s*\{[^}]*fetch|for\s*\(;;\)\s*\{[^}]*fetch/i, msg: 'Infinite HTTP loop (DDoS) blocked' },
+  { re: /setInterval\s*\([^,]+fetch|setTimeout.*fetch.*0\s*\)/i,               msg: 'Rapid HTTP requests blocked' },
+  { re: /new\s+Array\s*\(\s*\d{6,}\s*\)|Array\.from\s*\(\s*\{\s*length\s*:\s*\d{6,}/i, msg: 'Memory exhaustion blocked' },
+  { re: /while\s*\(\s*1\s*\)\s*\{[^}]{0,50}\}/i,                              msg: 'Infinite loop blocked' },
+  { re: /fork\s*\(\s*\)|os\.fork|multiprocessing\.Process/i,                  msg: 'Fork bomb blocked' },
+  // Network attacks
+  { re: /\b(socket|bind|listen|accept|connect)\s*\(/i,        msg: 'Network socket operations blocked' },
+  { re: /\b(nmap|masscan|zmap|netcat|nc\s+-[lzv])/i,          msg: 'Network scanner blocked' },
+  { re: /urllib\.request|requests\.get|http\.client|curl\s+/i,msg: 'External HTTP requests blocked' },
+  // System access
+  { re: /os\.(system|popen|execv?p?e?|spawn|fork)\s*\(/i,     msg: 'OS system calls blocked' },
+  { re: /subprocess\.(run|call|Popen|check_output)/i,          msg: 'Subprocess execution blocked' },
+  { re: /Runtime\.getRuntime\(\)\.exec/i,                      msg: 'Java Runtime.exec blocked' },
+  { re: /ProcessBuilder|Process\.Start/i,                      msg: 'Process execution blocked' },
+  { re: /\bexec\s*\(|shell_exec\s*\(|passthru\s*\(/i,         msg: 'Shell execution blocked' },
+  { re: /system\s*\(\s*["'`]/i,                                msg: 'System command blocked' },
+  // File system attacks
+  { re: /\/etc\/passwd|\/etc\/shadow|\/proc\/|\/sys\//i,       msg: 'System file access blocked' },
+  { re: /\.\.\/\.\.\/|path\s*traversal/i,                      msg: 'Path traversal blocked' },
+  { re: /os\.remove|shutil\.rmtree|unlink\s*\(/i,              msg: 'File deletion blocked' },
+  // Crypto/mining
+  { re: /\b(cryptonight|monero|bitcoin|mining|hashrate)\b/i,   msg: 'Crypto mining code blocked' },
+  { re: /CryptoJS|forge\.cipher|aes\.encrypt.*key/i,           msg: 'Suspicious crypto usage blocked' },
+  // Reverse shell / exploit patterns
+  { re: /bash\s+-i\s+>&|\/dev\/tcp\/|\/dev\/udp\//i,           msg: 'Reverse shell blocked' },
+  { re: /base64_decode\s*\(\s*\$|eval\s*\(\s*base64/i,         msg: 'Obfuscated code blocked' },
+  { re: /\$_(GET|POST|REQUEST|COOKIE)\s*\[.*\]\s*\)/i,         msg: 'PHP injection pattern blocked' },
+  { re: /sqlmap|havij|acunetix|nikto/i,                        msg: 'Security tool blocked' },
+  // Port scanning
+  { re: /for\s+\w+\s+in\s+range\s*\(\s*\d+\s*,\s*\d{4,}/i,   msg: 'Port scan loop blocked' },
+  { re: /socket\.connect\s*\(\s*\(.*,\s*\d+\s*\)\s*\)/i,      msg: 'Socket connection scan blocked' },
+  // Dangerous imports
+  { re: /import\s+(ctypes|winreg|_winapi|win32api)/i,          msg: 'Dangerous Windows API import blocked' },
+  { re: /from\s+ctypes\s+import|import\s+ctypes/i,             msg: 'ctypes (memory access) blocked' },
+];
+
+function scanCode(code, lang) {
+  for (const { re, msg } of BLOCKED_PATTERNS) {
+    if (re.test(code)) return msg;
+  }
+  // Extra: block if code is very long (obfuscated)
+  if (code.length > 50000) return 'Code too large (max 50KB)';
+  // Block base64 encoded large strings (common in exploits)
+  const b64 = code.match(/[A-Za-z0-9+/]{200,}={0,2}/g);
+  if (b64 && b64.length > 2) return 'Large base64 payload blocked';
+  return null; // safe
+}
+
+// ── Universal run dispatcher ──────────────────────────────────────────────────
+// ── Default file templates ────────────────────────────────────────────────────
+const FILE_TEMPLATES = {
+  go:    `package main\n\nimport "fmt"\n\nfunc main() {\n\tfmt.Println("Hello, Go!")\n}`,
+  java:  `public class Main {\n    public static void main(String[] args) {\n        System.out.println("Hello, Java!");\n    }\n}`,
+  c:     `#include <stdio.h>\n\nint main() {\n    printf("Hello, C!\\n");\n    return 0;\n}`,
+  cpp:   `#include <iostream>\nusing namespace std;\n\nint main() {\n    cout << "Hello, C++!" << endl;\n    return 0;\n}`,
+  rs:    `fn main() {\n    println!("Hello, Rust!");\n}`,
+  rb:    `puts "Hello, Ruby!"`,
+  php:   `<?php\necho "Hello, PHP!\\n";`,
+  kt:    `fun main() {\n    println("Hello, Kotlin!")\n}`,
+  swift: `print("Hello, Swift!")`,
+  r:     `cat("Hello, R!\\n")`,
+  lua:   `print("Hello, Lua!")`,
+  pl:    `print "Hello, Perl!\\n";`,
+  sh:    `#!/bin/bash\necho "Hello, Bash!"`,
+  cs:    `using System;\nclass Program {\n    static void Main() {\n        Console.WriteLine("Hello, C#!");\n    }\n}`,
+  sql:   `SELECT 'Hello, SQL!' AS message;`,
+  py:    `print("Hello, Python!")`,
+  js:    `console.log("Hello, JavaScript!");`,
+  ts:    `const msg: string = "Hello, TypeScript!";\nconsole.log(msg);`,
+};
+
+// ── Universal run dispatcher ──────────────────────────────────────────────────
+async function runFile(path) {
+  let code = getContent(vfs, path);
+  const ext  = path.split('.').pop()?.toLowerCase();
+  const name = path.split('/').pop();
+
+  // Auto-create file if not found
+  if (code === null) {
+    const tmpl = FILE_TEMPLATES[ext];
+    if (tmpl) {
+      vfs.nodes[path] = { c: tmpl, m: Date.now() };
+      saveVFS(vfs); renderTree();
+      code = tmpl;
+      tprint('dim', `📄 Created ${name} with template`);
+      openFile(path);
+    } else {
+      tprint('err', `File not found: ${path}`);
+      tprint('dim', `Tip: touch ${name}  then  open ${name}  to create it`);
+      return;
+    }
+  }
+
+  // Security scan
+  const threat = scanCode(code, ext);
+  if (threat) {
+    tprint('err', '🚫 BLOCKED: ' + threat);
+    tprint('warn', 'This code contains patterns not allowed in Lab.');
+    return;
+  }
+
+  tprint('info', `▶ Running ${name}...`);
+
+  // ── Rate limit check (applies to ALL languages) ───────────────────────────
+  const rlErr = _apiRL.check();
+  if (rlErr) {
+    tprint('err', '🛡 ' + rlErr);
+    if (!_authUser) tprint('info', '→ Login ដើម្បីទទួល 15 ដង/ថ្ងៃ (ចុច icon 👤 ខាងស្ដាំ)');
+    return;
+  }
+  if (!_authUser) {
+    tprint('dim', `(Guest: នៅសល់ ${_apiRL.remaining()}/${_GUEST_LIMIT} ដង/ថ្ងៃ)`);
+  }
+
+  setRunning(true);
+  _runAbortCtrl = new AbortController();
+
+  // Lang map — use server lang key
+  const LANG = {
+    js: 'js', ts: 'ts', py: 'python', html: null,
+    c: 'c', cpp: 'cpp', java: 'java', go: 'go',
+    rs: 'rust', rb: 'ruby', php: 'php', kt: 'kotlin',
+    swift: 'swift', r: 'r', lua: 'lua', pl: 'perl',
+    sh: 'bash', bash: 'bash', cs: 'csharp', sql: 'sqlite3',
+  };
+
+  const lang = LANG[ext];
+
+  if (ext === 'js')   { await execJS(code); }
+  else if (ext === 'ts')   { await execTS(code); }
+  else if (ext === 'py')   { await execPy(code); }
+  else if (ext === 'html') { execHTML(code); }
+  else if (lang) { await execPiston(lang, code, name); }
+  else {
+    tprint('warn', `Unknown .${ext} — trying as JavaScript`);
+    await execJS(code);
+  }
+  tprint('dim', '─'.repeat(40));
+  setRunning(false);
+  _runAbortCtrl = null;
+}
+
+// ── Auth System ───────────────────────────────────────────────────────────────
+const AUTH_KEY   = 'genz_auth_v1';
+const API_BASE   = 'http://localhost:5000/api';
+const _GUEST_LIMIT = 5;
+
+let _authUser = null; // null = guest
+
+function _loadAuth() {
+  try {
+    const d = JSON.parse(localStorage.getItem(AUTH_KEY) || 'null');
+    if (d && d.token) { _authUser = d; return; }
+  } catch {}
+  _authUser = null;
+}
+
+function _saveAuth(user) {
+  _authUser = user;
+  if (user) localStorage.setItem(AUTH_KEY, JSON.stringify(user));
+  else localStorage.removeItem(AUTH_KEY);
+}
+
+// ── Status bar rate limit display ─────────────────────────────────────────────
+function updateRLStatus() {
+  const el = document.getElementById('sb-rl');
+  if (!el) return;
+  if (!_authUser) {
+    const rem = _apiRL.remaining();
+    const used = _apiRL.used();
+    el.textContent = `🔓 Guest ${rem}/${_GUEST_LIMIT}`;
+    el.style.color = rem === 0 ? 'var(--error)' : 'rgba(0,255,170,.7)';
+  } else if (_authUser.lab?.unlimited) {
+    el.textContent = `👤 ${_authUser.name?.split(' ')[0] || 'User'} ♾`;
+    el.style.color = '#00ffaa';
+  } else {
+    const limit = _authUser.lab?.limit ?? 15;
+    const used  = _authUser.lab?.used  ?? 0;
+    const rem   = Math.max(0, limit - used);
+    el.textContent = `👤 ${_authUser.name?.split(' ')[0] || 'User'} ${used}/${limit}`;
+    el.title = `${rem} runs remaining today`;
+    el.style.color = rem === 0 ? 'var(--error)' : rem <= 3 ? 'var(--warning)' : 'rgba(0,255,170,.7)';
+  }
+  // Update auth button icon
+  const btn = document.getElementById('auth-btn');
+  if (btn) {
+    if (_authUser) {
+      const initials = (_authUser.name || 'U').charAt(0).toUpperCase();
+      btn.innerHTML = `<span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#00ffaa,#00b4ff);
+        display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#000">${initials}</span>`;
+    } else {
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
+    }
+  }
+}
+
+// ── Override _apiRL for guest limit ──────────────────────────────────────────
+// Patch check() to use guest limit when not logged in
+const _origCheck = _apiRL.check.bind(_apiRL);
+_apiRL.check = function() {
+  if (_authUser) return null; // server handles logged-in users
+  this._load();
+  const now = Date.now();
+  const used = this.calls.length;
+  if (used >= _GUEST_LIMIT) {
+    const oldest  = this.calls[0];
+    const resetMs = _RL_DAY - (now - oldest);
+    const resetHrs = Math.ceil(resetMs / 3600000);
+    const resetMin = Math.ceil(resetMs / 60000);
+    const timeStr  = resetHrs >= 1 ? `~${resetHrs} ម៉ោង` : `~${resetMin} នាទី`;
+    return `Guest limit: ${_GUEST_LIMIT} ដង/ថ្ងៃ — ហើយអស់! Reset ${timeStr}\nLogin ដើម្បីទទួល 15 ដង/ថ្ងៃ`;
+  }
+  this.calls.push(now);
+  this._save();
+  updateRLStatus();
+  return null;
+};
+_apiRL.remaining = function() {
+  this._load();
+  if (_authUser) {
+    if (_authUser.lab?.unlimited) return 9999;
+    return Math.max(0, (_authUser.lab?.limit ?? 15) - (_authUser.lab?.used ?? 0));
+  }
+  return Math.max(0, _GUEST_LIMIT - this.calls.length);
+};
+
+// ── Auth Modal ────────────────────────────────────────────────────────────────
+function openAuthModal(tab) {
+  const overlay = document.getElementById('auth-overlay');
+  overlay.classList.add('open');
+  overlay.style.display = 'flex';
+  switchAuthTab(tab || (_authUser ? 'profile' : 'login'));
+  // Focus first input after animation — prevents keystrokes going to terminal
+  setTimeout(() => {
+    const panel = tab || (_authUser ? 'profile' : 'login');
+    const firstInput = {
+      login: 'li-email',
+      register: 'rg-name',
+      profile: _authUser ? 'pf-edit-name' : null,
+    }[panel];
+    if (firstInput) document.getElementById(firstInput)?.focus();
+  }, 50);
+}
+
+function closeAuthModal(e) {
+  // Called with event (overlay click) — only close if clicking backdrop
+  if (e && e.target !== document.getElementById('auth-overlay')) return;
+  const overlay = document.getElementById('auth-overlay');
+  overlay.style.display = 'none';
+  overlay.classList.remove('open');
+}
+
+document.addEventListener('keydown', e => { 
+  if (e.key === 'Escape' && document.getElementById('auth-overlay').classList.contains('open')) { 
+    document.getElementById('auth-overlay').style.display = 'none';
+    document.getElementById('auth-overlay').classList.remove('open');
+  } 
+});
+
+function switchAuthTab(tab) {
+  ['login','register','profile'].forEach(t => {
+    document.getElementById('panel-' + t).style.display = t === tab ? 'block' : 'none';
+    const btn = document.getElementById('tab-' + t);
+    if (btn) {
+      btn.classList.toggle('active', t === tab);
+    }
+  });
+  if (tab === 'profile') renderProfile();
+  // Focus first input
+  setTimeout(() => {
+    const map = { login: 'li-email', register: 'rg-name', profile: null };
+    const id = map[tab];
+    if (id) document.getElementById(id)?.focus();
+  }, 30);
+}
+
+// ── Login ─────────────────────────────────────────────────────────────────────
+async function doLogin() {
+  const email = document.getElementById('li-email').value.trim();
+  const pass  = document.getElementById('li-pass').value;
+  const errEl = document.getElementById('li-err');
+  const btn   = document.getElementById('li-btn');
+  errEl.style.display = 'none';
+  if (!email || !pass) { errEl.textContent = 'សូមបំពេញ Email និង Password'; errEl.style.display = 'block'; return; }
+  btn.textContent = 'Loading...'; btn.disabled = true;
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: pass })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'Login failed');
+    _saveAuth(data.data);
+    updateRLStatus();
+    notify(`✅ Welcome back, ${data.data.name}!`, 'success');
+    closeAuthModal({ target: document.getElementById('auth-overlay') });
+    document.getElementById('li-pass').value = '';
+  } catch (e) {
+    errEl.textContent = e.message;
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Login'; btn.disabled = false;
+  }
+}
+
+// ── Register ──────────────────────────────────────────────────────────────────
+async function doRegister() {
+  const name  = document.getElementById('rg-name').value.trim();
+  const email = document.getElementById('rg-email').value.trim();
+  const pass  = document.getElementById('rg-pass').value;
+  const errEl = document.getElementById('rg-err');
+  const btn   = document.getElementById('rg-btn');
+  errEl.style.display = 'none';
+  if (!name || !email || !pass) { errEl.textContent = 'សូមបំពេញគ្រប់ field'; errEl.style.display = 'block'; return; }
+  if (pass.length < 6) { errEl.textContent = 'Password ត្រូវការ 6 តួអក្សរ'; errEl.style.display = 'block'; return; }
+  btn.textContent = 'Loading...'; btn.disabled = true;
+  try {
+    const res = await fetch(`${API_BASE}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password: pass })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'Register failed');
+    _saveAuth(data.data);
+    updateRLStatus();
+    notify(`✅ Welcome, ${data.data.name}! Account created.`, 'success');
+    closeAuthModal({ target: document.getElementById('auth-overlay') });
+  } catch (e) {
+    errEl.textContent = e.message;
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Register'; btn.disabled = false;
+  }
+}
+
+// ── Profile render ────────────────────────────────────────────────────────────
+function renderProfile() {
+  const guestEl = document.getElementById('profile-guest');
+  const userEl  = document.getElementById('profile-user');
+  if (!_authUser) {
+    guestEl.style.display = 'block'; userEl.style.display = 'none'; return;
+  }
+  guestEl.style.display = 'none'; userEl.style.display = 'block';
+  // Avatar initials
+  const initials = (_authUser.name || 'U').charAt(0).toUpperCase();
+  document.getElementById('pf-avatar').textContent = initials;
+  document.getElementById('pf-name').textContent   = _authUser.name || '';
+  document.getElementById('pf-email').textContent  = _authUser.email || '';
+  document.getElementById('pf-id').textContent     = _authUser.userId || '';
+  document.getElementById('pf-edit-name').value    = _authUser.name || '';
+  document.getElementById('pf-edit-bio').value     = _authUser.bio  || '';
+  // Rate limit
+  const lab = _authUser.lab || {};
+  const unlimitedEl = document.getElementById('pf-rl-unlimited');
+  const limitedEl   = document.getElementById('pf-rl-limited');
+  if (lab.unlimited) {
+    unlimitedEl.style.display = 'flex'; limitedEl.style.display = 'none';
+  } else {
+    unlimitedEl.style.display = 'none'; limitedEl.style.display = 'block';
+    const limit = lab.limit ?? 15;
+    const used  = lab.used  ?? 0;
+    const rem   = Math.max(0, limit - used);
+    document.getElementById('pf-rl-count').textContent = `${rem}/${limit} ដង/ថ្ងៃ`;
+    document.getElementById('pf-rl-bar').style.width   = `${Math.min(100, (used / limit) * 100)}%`;
+    document.getElementById('pf-rl-bar').style.background = rem === 0 ? 'var(--error)' : 'linear-gradient(90deg,#00ffaa,#00b4ff)';
+    if (lab.resetAt) {
+      const hrs = Math.ceil((new Date(lab.resetAt) - Date.now()) / 3600000);
+      document.getElementById('pf-rl-reset').textContent = hrs > 0 ? `Reset ក្នុង ~${hrs} ម៉ោង` : 'Reset ឆាប់ៗ';
+    }
+  }
+}
+
+// ── Update Profile ────────────────────────────────────────────────────────────
+async function doUpdateProfile() {
+  if (!_authUser) return;
+  const name = document.getElementById('pf-edit-name').value.trim();
+  const bio  = document.getElementById('pf-edit-bio').value.trim();
+  const errEl = document.getElementById('pf-err');
+  errEl.style.display = 'none';
+  if (!name) { errEl.textContent = 'Name មិនអាចទទេ'; errEl.style.display = 'block'; return; }
+  try {
+    const res = await fetch(`${API_BASE}/auth/profile`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${_authUser.token}` },
+      body: JSON.stringify({ name, bio })
+    });
+    const data = await res.json();
+    if (!res.ok || !data.success) throw new Error(data.error || 'Update failed');
+    _authUser = { ..._authUser, ...data.data };
+    _saveAuth(_authUser);
+    updateRLStatus();
+    renderProfile();
+    notify('✅ Profile updated!', 'success');
+  } catch (e) {
+    errEl.textContent = e.message; errEl.style.display = 'block';
+  }
+}
+
+// ── Logout ────────────────────────────────────────────────────────────────────
+function doLogout() {
+  _saveAuth(null);
+  updateRLStatus();
+  notify('👋 Logged out', 'info');
+  closeAuthModal({ target: document.getElementById('auth-overlay') });
+}
+
+// ── Refresh user lab data from server ────────────────────────────────────────
+async function refreshUserLab() {
+  if (!_authUser) return;
+  try {
+    const res = await fetch(`${API_BASE}/auth/me`, {
+      headers: { 'Authorization': `Bearer ${_authUser.token}` }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.success) {
+      _authUser = { ..._authUser, ...data.data };
+      _saveAuth(_authUser);
+      updateRLStatus();
+    }
+  } catch {}
+}
+
+// ── Override runFile to pass auth token & update lab count ───────────────────
+const _origRunFile = runFile;
+window.runFile = async function(path) {
+  await _origRunFile(path);
+  // After run, refresh user lab data from server
+  if (_authUser) setTimeout(refreshUserLab, 800);
+  else updateRLStatus();
+};
+
+// ── Override execPiston to send auth token ────────────────────────────────────
+const _origExecPiston = execPiston;
+window.execPiston = async function(lang, code, filename) {
+  const cfg = PISTON_LANGS[lang];
+  if (!cfg) { tprint('err', `Language "${lang}" not supported`); return; }
+  tprint('dim', `⚙ កំពុង compile ${lang}...`);
+  try {
+    const headers = { 'Content-Type': 'application/json' };
+    if (_authUser?.token) headers['Authorization'] = `Bearer ${_authUser.token}`;
+    const res = await fetch(`${API_BASE}/run`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ lang, code }),
+      signal: _runAbortCtrl?.signal,
+    });
+    if (res.status === 501) {
+      const d = await res.json().catch(() => ({}));
+      tprint('warn', '⚠ ' + (d.error || 'Not available'));
+      return;
+    }
+    if (!res.ok) {
+      const d = await res.json().catch(() => ({}));
+      // Rate limit from server
+      if (res.status === 429) {
+        tprint('err', '🛡 ' + (d.error || 'Rate limit exceeded'));
+        if (_authUser) { _authUser.lab = d.lab || _authUser.lab; _saveAuth(_authUser); updateRLStatus(); }
+        return;
+      }
+      tprint('err', '✗ Server error: ' + (d.error || `HTTP ${res.status}`));
+      return;
+    }
+    const data = await res.json();
+    // Update local lab data
+    if (data.lab && _authUser) { _authUser.lab = data.lab; _saveAuth(_authUser); updateRLStatus(); }
+    if (data.remaining !== undefined) {
+      const lim = data.unlimited ? '♾' : `${data.remaining}/${data.limit ?? _RL_LIMIT}`;
+      tprint('dim', `(នៅសល់ ${lim} ដង/ថ្ងៃ)`);
+    }
+    const compile = (data.compile || '').trim();
+    const out  = (data.stdout || '').trim();
+    const err  = (data.stderr || '').trim();
+    const exit = data.exitCode;
+    const engine = data.engine || '';
+    if (engine) tprint('dim', `[${engine}]`);
+    if (compile) compile.split('\n').forEach(l => tprint('warn', l));
+    if (out)  out.split('\n').forEach(l => tprint('out', l));
+    if (err)  err.split('\n').forEach(l => tprint('err', '✗ ' + l));
+    if (!out && !err && !compile) tprint('dim', '(no output)');
+    if (exit !== 0 && exit !== undefined) tprint('warn', `Exit code: ${exit}`);
+  } catch (e) {
+    if (e.name === 'AbortError') { tprint('warn', '^C  Stopped'); }
+    else { tprint('err', '✗ Cannot reach server: ' + e.message); }
+  }
+};
+
+// ── Init Auth ─────────────────────────────────────────────────────────────────
+_loadAuth();
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+renderTree();
+// Create first terminal
+addTerminal();
+// Focus terminal input
+const _firstTerm = getActiveTerm();
+if (_firstTerm) _firstTerm.inputEl.focus();
+// Update rate limit status bar
+updateRLStatus();
+// Refresh user lab data from server on load
+if (_authUser) refreshUserLab();
+
+// ── Terminal Resize (drag handle) ─────────────────────────────────────────────
+(function initTermResize() {
+  const handle = document.getElementById('term-resize-handle');
+  const panel  = document.getElementById('term-panel');
+  const TERM_HEIGHT_KEY = 'lab_term_height';
+
+  // Restore saved height
+  const saved = parseInt(localStorage.getItem(TERM_HEIGHT_KEY) || '0');
+  if (saved >= 80) panel.style.height = saved + 'px';
+
+  let startY = 0, startH = 0, dragging = false;
+
+  handle.addEventListener('mousedown', (e) => {
+    if (termCollapsed) return;
+    e.preventDefault();
+    dragging = true;
+    startY = e.clientY;
+    startH = panel.offsetHeight;
+    handle.classList.add('dragging');
+    document.body.style.cursor = 'ns-resize';
+    document.body.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const delta = startY - e.clientY; // drag up = bigger
+    const newH  = Math.min(Math.max(startH + delta, 80), window.innerHeight * 0.8);
+    panel.style.height = newH + 'px';
+    panel.style.transition = 'none';
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    panel.style.transition = '';
+    localStorage.setItem(TERM_HEIGHT_KEY, panel.offsetHeight);
+  });
+
+  // Touch support
+  handle.addEventListener('touchstart', (e) => {
+    if (termCollapsed) return;
+    const t = e.touches[0];
+    dragging = true; startY = t.clientY; startH = panel.offsetHeight;
+    handle.classList.add('dragging');
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    const t = e.touches[0];
+    const delta = startY - t.clientY;
+    const newH = Math.min(Math.max(startH + delta, 80), window.innerHeight * 0.8);
+    panel.style.height = newH + 'px';
+    panel.style.transition = 'none';
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove('dragging');
+    panel.style.transition = '';
+    localStorage.setItem(TERM_HEIGHT_KEY, panel.offsetHeight);
+  });
+
+  // Double-click handle → reset to default 220px
+  handle.addEventListener('dblclick', () => {
+    panel.style.height = '220px';
+    localStorage.setItem(TERM_HEIGHT_KEY, 220);
+  });
+})();
+</script>
+<script>
+// ── Mobile: Fullscreen ────────────────────────────────────────────────────────
+function toggleFullscreen() {
+  const btn = document.getElementById('fullscreen-btn');
+  if (!document.fullscreenElement) {
+    (document.documentElement.requestFullscreen?.() ||
+     document.documentElement.webkitRequestFullscreen?.() ||
+     document.documentElement.mozRequestFullScreen?.())
+    ?.then(() => btn?.classList.add('is-fullscreen'))
+    ?.catch(() => {});
+  } else {
+    (document.exitFullscreen?.() ||
+     document.webkitExitFullscreen?.() ||
+     document.mozCancelFullScreen?.())
+    ?.then(() => btn?.classList.remove('is-fullscreen'))
+    ?.catch(() => {});
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  const btn = document.getElementById('fullscreen-btn');
+  if (btn) btn.classList.toggle('is-fullscreen', !!document.fullscreenElement);
+});
+
+// F11 shortcut
+document.addEventListener('keydown', e => {
+  if (e.key === 'F11') { e.preventDefault(); toggleFullscreen(); }
+});
+
+// ── Mobile: Rotate prompt ─────────────────────────────────────────────────────
+const ROTATE_SKIP_KEY = 'genz_rotate_skip';
+
+function dismissRotate() {
+  sessionStorage.setItem(ROTATE_SKIP_KEY, '1');
+  const el = document.getElementById('rotate-prompt');
+  if (el) el.style.display = 'none';
+  // Remove blur
+  ['#layout','#titlebar','#statusbar'].forEach(s => {
+    const el = document.querySelector(s);
+    if (el) { el.style.filter = ''; el.style.pointerEvents = ''; }
+  });
+}
+
+function checkOrientation() {
+  if (sessionStorage.getItem(ROTATE_SKIP_KEY)) return;
+  const isMobile = window.innerWidth <= 600 || /Mobi|Android/i.test(navigator.userAgent);
+  const isPortrait = window.innerHeight > window.innerWidth;
+  const el = document.getElementById('rotate-prompt');
+  if (!el) return;
+  if (isMobile && isPortrait) {
+    el.style.display = 'flex';
+  } else {
+    el.style.display = 'none';
+    ['#layout','#titlebar','#statusbar'].forEach(s => {
+      const e = document.querySelector(s);
+      if (e) { e.style.filter = ''; e.style.pointerEvents = ''; }
+    });
+  }
+}
+
+window.addEventListener('orientationchange', () => setTimeout(checkOrientation, 300));
+window.addEventListener('resize', checkOrientation);
+checkOrientation();
+</script>
+<script src="backgrounds.js"></script>
+</body>
+</html>

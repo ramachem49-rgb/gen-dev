@@ -44,7 +44,7 @@ class DDoSDetector extends EventEmitter {
     }
     
     // Track request
-    this.trackRequest(ip, now);
+    this.trackRequest(ip, now, req);
     
     // Check for DDoS patterns
     const isDDoS = this.checkDDoSPatterns(ip, now);
@@ -61,7 +61,7 @@ class DDoSDetector extends EventEmitter {
     next();
   }
   
-  trackRequest(ip, timestamp) {
+  trackRequest(ip, timestamp, req) {
     // Track per second
     const secondKey = Math.floor(timestamp / 1000);
     if (!this.requestCounts.has(ip)) {
@@ -77,7 +77,7 @@ class DDoSDetector extends EventEmitter {
     }
     
     const history = this.ipRequestHistory.get(ip);
-    history.push({ timestamp, url: req.url, method: req.method });
+    history.push({ timestamp, url: req?.url || '/', method: req?.method || 'GET' });
     
     // Keep only last 1000 requests
     if (history.length > 1000) {

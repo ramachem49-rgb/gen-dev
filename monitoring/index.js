@@ -33,6 +33,19 @@ class SecurityMonitor {
         timestamp: new Date().toISOString()
       });
     });
+
+    // ── Notify endpoint — receives alerts from server ─────────────────────────
+    this.app.use(require('express').json());
+    this.app.post('/monitoring/notify', (req, res) => {
+      const secret = req.headers['x-monitor-secret'];
+      if (secret !== (process.env.MONITORING_SECRET || 'genz-monitor-secret')) {
+        return res.status(403).json({ error: 'Forbidden' });
+      }
+      const { text, severity } = req.body || {};
+      if (!text) return res.status(400).json({ error: 'text required' });
+      telegramBot.sendMessage(text, severity || 'INFO');
+      res.json({ ok: true });
+    });
     
     // Stats endpoint
     this.app.get('/monitoring/stats', (req, res) => {

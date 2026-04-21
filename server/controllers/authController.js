@@ -1,127 +1,128 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const telegramService = require('../services/telegramService');
 
-// Generate JWT Token
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE
-  });
-};
+const generateToken = (id) =>
+  jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '7d' });
 
-// @desc    Register user
-// @route   POST /api/auth/register
-// @access  Public
+const safeUser = (u) => ({
+  _id:       u._id,
+  userId:    u.userId,
+  name:      u.name,
+  email:     u.email,
+  role:      u.role,
+  avatar:    u.avatar,
+  bio:       u.bio,
+  lab:       { limit: u.lab.limit, used: u.lab.used, unlimited: u.lab.unlimited, resetAt: u.lab.resetAt },
+  createdAt: u.createdAt,
+});
+
+// POST /api/auth/register
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    if (!name || !email || !password)
+      return res.status(400).json({ success: false, error: 'All fields required' });
 
-    // Check if user exists
-    const userExists = await User.findOne({ email });
-    if (userExists) {
-      return res.status(400).json({
-        success: false,
-        error: 'User already exists'
-      });
-    }
+    if (await User.findOne({ email }))
+      return res.status(400).json({ success: false, error: 'Email already registered' });
 
-    // Create user
-    const user = await User.create({
-      name,
-      email,
-      password
+    const user = await User.create({ name, email, password });
+
+    telegramService.sendLabNotify({
+      title: '👤 New User Registered',
+      userId: user.userId,
+      name: user.name,
+      email: user.email,
+      ip: req.ip,
     });
 
-    if (user) {
-      res.status(201).json({
-        success: true,
-        data: {
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          role: user.role,
-          token: generateToken(user._id)
-        }
-      });
-    }
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
+    res.status(201).json({
+      success: true,
+      data: { ...safeUser(user), token: generateToken(user._id) }
     });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
   }
 };
 
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
+// POST /api/auth/login
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ success: false, error: 'Email and password required' });
 
-    // Validate email & password
-    if (!email || !password) {
-      return res.status(400).json({
-        success: false,
-        error: 'Please provide email and password'
-      });
+    const user = await User.findOne({ email }).select('+password +loginAttempts +lockUntil');
+    if (!user)
+      return res.status(401).json({ success: false, error: 'Invalid credentials' });
+
+    // Check lock
+    if (user.isLocked()) {
+      const mins = Math.ceil((user.lockUntil - Date.now()) / 60000);
+      return res.status(423).json({ success: false, error: `Account locked. Try again in ${mins} min` });
     }
 
-    // Check for user
-    const user = await User.findOne({ email }).select('+password');
-    if (!user) {
+    const match = await user.matchPassword(password);
+    if (!match) {
+      await user.incLoginAttempts();
+      const remaining = Math.max(0, 5 - (user.loginAttempts + 1));
       return res.status(401).json({
         success: false,
-        error: 'Invalid credentials'
+        error: remaining > 0 ? `Invalid credentials (${remaining} attempts left)` : 'Account locked for 15 minutes'
       });
     }
 
-    // Check password
-    const isPasswordMatch = await user.matchPassword(password);
-    if (!isPasswordMatch) {
-      return res.status(401).json({
-        success: false,
-        error: 'Invalid credentials'
-      });
-    }
+    // Reset attempts on success
+    await user.updateOne({ $set: { loginAttempts: 0, lastLogin: new Date(), lastLoginIP: req.ip }, $unset: { lockUntil: 1 } });
 
-    res.status(200).json({
+    res.json({
       success: true,
-      data: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        token: generateToken(user._id)
-      }
+      data: { ...safeUser(user), token: generateToken(user._id) }
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
   }
 };
 
-// @desc    Get current user
-// @route   GET /api/auth/me
-// @access  Private
+// GET /api/auth/me
 const getMe = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
-    res.status(200).json({
-      success: true,
-      data: user
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message
-    });
+    res.json({ success: true, data: safeUser(user) });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
   }
 };
 
-module.exports = {
-  registerUser,
-  loginUser,
-  getMe
+// PUT /api/auth/profile
+const updateProfile = async (req, res) => {
+  try {
+    const { name, bio, avatar } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { ...(name && { name }), ...(bio !== undefined && { bio }), ...(avatar !== undefined && { avatar }) },
+      { new: true, runValidators: true }
+    );
+    res.json({ success: true, data: safeUser(user) });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
 };
+
+// PUT /api/auth/password
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = await User.findById(req.user.id).select('+password');
+    if (!await user.matchPassword(currentPassword))
+      return res.status(400).json({ success: false, error: 'Current password incorrect' });
+    user.password = newPassword;
+    await user.save();
+    res.json({ success: true, message: 'Password updated' });
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+};
+
+module.exports = { registerUser, loginUser, getMe, updateProfile, changePassword };

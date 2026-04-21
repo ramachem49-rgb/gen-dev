@@ -1,0 +1,1269 @@
+[2026-04-13T12:11:24.408Z] MongoDB Connection Failed: MongoParseError: option debug is not supported
+    at parseOptions (D:\master\server\node_modules\mongodb\lib\connection_string.js:273:15)
+    at new MongoClient (D:\master\server\node_modules\mongodb\lib\mongo_client.js:48:63)
+    at NativeConnection.createClient (D:\master\server\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:288:14)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:766:34)
+    at Mongoose.connect (D:\master\server\node_modules\mongoose\lib\index.js:416:15)
+    at connectDB (D:\master\server\config\db.js:56:33)
+    at startServer (D:\master\server\server.js:215:11)
+    at Object.<anonymous> (D:\master\server\server.js:317:1)
+    at Module._compile (node:internal/modules/cjs/loader:1761:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1481:32)
+    at Module._load (node:internal/modules/cjs/loader:1300:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47
+[2026-04-13T12:11:48.869Z] MongoDB Connection Failed: MongoParseError: option debug is not supported
+    at parseOptions (D:\master\server\node_modules\mongodb\lib\connection_string.js:273:15)
+    at new MongoClient (D:\master\server\node_modules\mongodb\lib\mongo_client.js:48:63)
+    at NativeConnection.createClient (D:\master\server\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:288:14)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:766:34)
+    at Mongoose.connect (D:\master\server\node_modules\mongoose\lib\index.js:416:15)
+    at connectDB (D:\master\server\config\db.js:56:33)
+    at startServer (D:\master\server\server.js:215:11)
+    at Object.<anonymous> (D:\master\server\server.js:317:1)
+    at Module._compile (node:internal/modules/cjs/loader:1761:14)
+    at Object..js (node:internal/modules/cjs/loader:1893:10)
+    at Module.load (node:internal/modules/cjs/loader:1481:32)
+    at Module._load (node:internal/modules/cjs/loader:1300:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1504:12)
+    at require (node:internal/modules/helpers:152:16)
+    at [eval]:1:1
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+[2026-04-13T12:13:01.952Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+    at async startServer (D:\master\server\server.js:215:5)
+[2026-04-13T12:13:33.722Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+    at async startServer (D:\master\server\server.js:215:5)
+[2026-04-13T12:14:53.211Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+    at async startServer (D:\master\server\server.js:215:5)
+[2026-04-13T12:16:34.180Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+    at async startServer (D:\master\server\server.js:216:5)
+[2026-04-13T12:26:13.567Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+    at async startServer (D:\master\server\server.js:216:5)
+[2026-04-13T12:26:53.600Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:27:33.620Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:28:13.632Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:28:53.660Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:29:33.670Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:30:13.702Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:30:53.730Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:31:33.749Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:32:13.763Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:32:53.775Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:33:33.805Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:34:13.831Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:34:53.853Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:35:33.877Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:36:13.884Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:36:53.918Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:37:33.923Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:38:13.944Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:38:53.961Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:39:33.978Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:40:13.992Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:40:54.004Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:41:34.028Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:42:14.044Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:42:54.067Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:43:34.088Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:44:14.120Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:44:54.148Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:45:34.160Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:46:14.180Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:46:54.196Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:47:34.215Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:48:14.227Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:48:54.235Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:49:34.263Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:50:14.285Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:50:54.313Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:51:34.324Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:52:14.366Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:52:54.383Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:53:34.413Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:54:14.437Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:54:54.458Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:55:34.477Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:56:14.504Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:56:54.515Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:57:34.528Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:58:14.538Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:58:54.545Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T12:59:34.563Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:00:14.569Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:00:54.588Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:01:34.607Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:02:14.623Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:02:54.656Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:03:34.668Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:04:14.735Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:04:54.749Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:05:34.772Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:06:14.792Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:06:54.809Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:07:34.834Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:08:14.846Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:08:54.862Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:09:34.864Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:10:14.882Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:10:54.896Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:11:34.920Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:12:14.941Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:12:54.962Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:13:34.986Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:14:14.996Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:14:55.003Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:15:35.012Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:16:15.031Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:16:55.055Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:17:35.455Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:18:15.473Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:18:55.490Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:19:35.510Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:20:15.533Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:20:55.556Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:21:35.588Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:22:15.621Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:22:55.640Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:23:35.655Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:24:15.661Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:24:55.691Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:25:35.729Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:26:15.750Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:26:55.836Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:27:36.411Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:28:16.425Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:28:56.445Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:29:36.459Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:30:16.483Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:30:56.502Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:31:36.512Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:32:16.604Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:32:56.629Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-13T13:33:36.652Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:40:55.451Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+    at async startServer (D:\master\server\server.js:216:5)
+[2026-04-14T11:41:35.468Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:42:15.491Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:42:55.520Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:43:35.538Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:44:15.563Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:44:55.595Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:45:35.607Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:46:15.615Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:46:55.637Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:47:35.671Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:48:15.697Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:48:55.724Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:49:35.738Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:50:15.750Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:50:55.771Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:51:35.787Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:52:15.824Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:52:55.845Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:53:35.874Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:54:15.903Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:54:55.930Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:55:35.964Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:56:15.976Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:56:55.995Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:57:36.017Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:58:16.048Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:58:56.075Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T11:59:36.089Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:00:16.109Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:00:56.142Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:01:36.160Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:02:16.196Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:02:56.227Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:03:36.238Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:04:16.259Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:04:56.278Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:05:36.303Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:06:16.316Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:06:56.338Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:07:36.359Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:08:16.374Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:08:56.388Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:09:36.439Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:10:16.457Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:10:56.471Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:11:36.496Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:12:16.579Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:12:56.695Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:13:36.753Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:14:16.776Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:14:56.807Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:15:36.835Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:16:16.847Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:16:56.865Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:17:36.899Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:18:16.906Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:18:56.926Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:19:36.948Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:20:16.966Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:20:56.987Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:21:37.008Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:22:17.044Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:22:57.052Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:23:37.083Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:24:17.123Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:24:57.147Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:25:37.168Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:26:17.192Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:26:57.221Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:27:37.247Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:28:17.261Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:28:57.299Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:29:37.316Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:30:17.331Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:30:57.357Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:31:37.377Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:32:17.403Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:32:57.424Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:33:37.441Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:34:17.487Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:34:57.514Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:35:37.531Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:36:17.542Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:36:57.604Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:37:37.621Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:38:17.643Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:38:57.650Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:39:37.677Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:40:17.694Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:40:57.719Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:41:37.736Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:42:17.815Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:42:57.846Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processTimers (node:internal/timers:538:9)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:43:37.869Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:44:17.889Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-14T12:44:57.923Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processTimers (node:internal/timers:538:9)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:16:36.234Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+    at async startServer (D:\master\server\server.js:216:5)
+[2026-04-15T12:17:16.259Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:17:56.275Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:18:36.303Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:19:16.332Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:19:56.342Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:20:36.363Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:21:16.376Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:21:56.395Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:22:36.419Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:23:16.432Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:23:56.465Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:24:36.541Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:25:16.616Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:25:56.653Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:26:36.680Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:27:16.696Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:27:56.712Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:28:36.728Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:29:16.747Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:29:56.755Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:30:36.785Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:31:16.914Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:31:56.982Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:32:36.997Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:33:17.012Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:33:57.039Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:34:37.063Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:35:17.080Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:35:57.110Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:36:37.129Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:37:17.140Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:37:57.153Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:38:37.167Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:39:17.202Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:39:57.222Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:40:37.249Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:41:17.262Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:41:57.282Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:42:37.297Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:43:17.317Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:43:57.333Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:44:37.348Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:45:17.374Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:45:57.389Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:46:37.402Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:47:17.416Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:47:57.444Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:48:37.464Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:49:17.482Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:49:57.488Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:50:37.506Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:51:17.527Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:51:57.548Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:52:37.567Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:53:17.582Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:53:57.600Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:54:37.626Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:55:17.635Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:55:57.656Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:56:37.680Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:57:17.718Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:57:57.739Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:58:37.753Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:59:17.772Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T12:59:57.790Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:00:37.809Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:01:17.828Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:01:57.859Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:02:37.891Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:03:17.913Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:03:57.932Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:04:37.969Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:05:18.006Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:05:58.034Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:06:38.047Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:07:18.077Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:07:58.091Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:08:38.109Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:09:18.146Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:09:58.167Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:10:38.185Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:11:18.202Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:11:58.229Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:12:38.247Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:13:18.406Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:13:58.475Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:14:38.492Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:15:18.500Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:15:58.521Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:16:38.535Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:17:18.602Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:17:58.646Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:18:38.669Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:19:18.695Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:19:58.724Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:20:38.743Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:21:18.761Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)
+[2026-04-15T13:21:58.770Z] MongoDB Connection Failed: MongooseServerSelectionError: connect ECONNREFUSED ::1:27017, connect ECONNREFUSED 127.0.0.1:27017
+    at _handleConnectionErrors (D:\master\server\node_modules\mongoose\lib\connection.js:816:11)
+    at NativeConnection.openUri (D:\master\server\node_modules\mongoose\lib\connection.js:791:11)
+    at async connectDB (D:\master\server\config\db.js:53:18)

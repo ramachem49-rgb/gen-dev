@@ -50,12 +50,26 @@ app.use(helmet({
   },
 }));
 
-// CORS configuration
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+// CORS configuration — allow any localhost port in development
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, Electron, file://)
+    if (!origin || origin === 'null') return callback(null, true);
+    // Allow any localhost / 127.0.0.1 port in development
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      (origin.startsWith('http://localhost:') || origin.startsWith('http://127.0.0.1:'))
+    ) {
+      return callback(null, true);
+    }
+    // Allow configured FRONTEND_URL in production
+    if (origin === process.env.FRONTEND_URL) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
-  optionsSuccessStatus: 200
-}));
+  optionsSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 // Body parser with size limit
 app.use(express.json({ limit: '10mb' }));
@@ -124,11 +138,18 @@ app.use((req, res, next) => {
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Serve the Lab from the server so relative /api/* calls work
+app.use('/lab', express.static(path.join(__dirname, '../client/public/lab')));
+app.use('/lab', express.static(path.join(__dirname, '../lab')));
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/lessons', lessonRoutes);
 app.use('/api/contact', contactRoutes);
 app.use('/api/security', securityRoutes);
+app.use('/api/hierarchical-lessons', require('./routes/hierarchicalLessonRoutes'));
+app.use('/api/run', require('./routes/runCodeRoutes'));
+app.use('/api/user', require('./routes/runCodeRoutes')); // /api/user/limits alias
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -315,140 +336,3 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Start the server
 startServer();
-
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');  // បន្ថែមនេះ
-const helmet = require('helmet');
-const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
-require('dotenv').config();
-
-// Import routes
-const authRoutes = require('./routes/authRoutes');
-const lessonRoutes = require('./routes/lessonRoutes');
-const contactRoutes = require('./routes/contactRoutes');
-
-const app = express();
-
-// Security middleware
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" }
-}));
-
-// CORS
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true
-}));
-
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Too many requests'
-});
-app.use('/api', limiter);
-
-// Body parser
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-
-// Simple sanitization
-app.use((req, res, next) => {
-  const sanitize = (obj) => {
-    if (!obj || typeof obj !== 'object') return obj;
-    if (Array.isArray(obj)) return obj.map(item => sanitize(item));
-    
-    const cleaned = {};
-    for (const [key, value] of Object.entries(obj)) {
-      const cleanKey = key.replace(/[$.]/g, '');
-      if (typeof value === 'string') {
-        cleaned[cleanKey] = value.replace(/[$.]/g, '');
-      } else if (value && typeof value === 'object') {
-        cleaned[cleanKey] = sanitize(value);
-      } else {
-        cleaned[cleanKey] = value;
-      }
-    }
-    return cleaned;
-  };
-  
-  if (req.body) req.body = sanitize(req.body);
-  if (req.query) req.query = sanitize(req.query);
-  if (req.params) req.params = sanitize(req.params);
-  next();
-});
-
-// Logging
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
-
-// Health check
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'OK',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime()
-  });
-});
-
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/lessons', lessonRoutes);
-app.use('/api/contact', contactRoutes);
-
-// Root
-app.get('/', (req, res) => {
-  res.json({
-    name: 'Learning Platform API',
-    version: '1.0.0',
-    status: 'running',
-    endpoints: {
-      auth: '/api/auth',
-      lessons: '/api/lessons',
-      contact: '/api/contact',
-      health: '/health'
-    }
-  });
-});
-
-// 404 handler
-app.use('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    error: `Route ${req.originalUrl} not found`
-  });
-});
-
-// Error handler
-app.use((err, req, res, next) => {
-  console.error('Error:', err.message);
-  res.status(err.status || 500).json({
-    success: false,
-    error: process.env.NODE_ENV === 'production' 
-      ? 'Internal server error' 
-      : err.message
-  });
-});
-
-// Connect to MongoDB
-const PORT = process.env.PORT || 5000;
-
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/learning_platform', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('✅ MongoDB Connected Successfully');
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
-    console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
-  });
-})
-.catch((error) => {
-  console.error('❌ MongoDB Connection Error:', error.message);
-  process.exit(1);
-});

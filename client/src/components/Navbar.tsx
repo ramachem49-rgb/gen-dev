@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Code2, Moon, Sun, Sparkles } from "lucide-react";
+import { Menu, X, Code2, Moon, Sun, Sparkles, BookmarkCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAllReadingProgress } from "@/hooks/useAllReadingProgress";
 
 const navItems = [
   { label: "\u1791\u17C6\u1796\u17D0\u179A\u178A\u17BE\u1798", path: "/" },
   { label: "\u1798\u17C1\u179A\u17C0\u1793\u1791\u17B6\u17C6\u1784\u17A2\u179F\u17CB", path: "/lessons" },
   { label: "\u17A2\u17C6\u1796\u17B8\u1799\u17BE\u1784", path: "/about" },
   { label: "\u1791\u17C6\u1793\u17B6\u1780\u17CB\u1791\u17C6\u1793\u1784", path: "/contact" },
+  { label: "⚗ Lab", path: "/lab" },
 ];
 
 const Navbar = () => {
@@ -16,6 +19,8 @@ const Navbar = () => {
   const [isDark, setIsDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { data } = useAllReadingProgress();
+  const savedCount = data.length;
 
   useEffect(() => {
     const stored = localStorage.getItem("theme");
@@ -84,6 +89,19 @@ const Navbar = () => {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-2.5">
+            {/* My Lessons shortcut */}
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button asChild variant="ghost" size="icon" className="rounded-xl h-10 w-10 relative">
+                <Link to="/my-lessons">
+                  <BookmarkCheck className={savedCount > 0 ? "h-[1.15rem] w-[1.15rem] text-amber-500" : "h-[1.15rem] w-[1.15rem]"} />
+                  {savedCount > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-amber-500 text-[9px] font-bold text-white flex items-center justify-center">
+                      {savedCount > 9 ? '9+' : savedCount}
+                    </span>
+                  )}
+                </Link>
+              </Button>
+            </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant="ghost" size="icon" onClick={toggleDark} className="rounded-xl h-10 w-10">
                 <AnimatePresence mode="wait">
@@ -159,6 +177,22 @@ const Navbar = () => {
                     </Link>
                   </motion.div>
                 ))}
+                {/* My Lessons mobile */}
+                <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: navItems.length * 0.06 }}>
+                  <Link to="/my-lessons" onClick={() => setIsOpen(false)}
+                    className={`flex items-center gap-2 px-5 py-3.5 rounded-2xl text-sm font-medium transition-all ${
+                      location.pathname === '/my-lessons'
+                        ? "bg-gradient-to-r from-primary via-primary-deep to-primary-glow text-primary-foreground shadow-lg shadow-primary/20"
+                        : "text-muted-foreground hover:bg-muted/60"
+                    }`}
+                  >
+                    <BookmarkCheck className="h-4 w-4 text-amber-500" />
+                    មេរៀនរបស់ខ្ញុំ
+                    {savedCount > 0 && (
+                      <Badge className="ml-auto h-5 px-1.5 text-[10px] bg-amber-500 text-white">{savedCount}</Badge>
+                    )}
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           )}

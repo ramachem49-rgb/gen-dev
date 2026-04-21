@@ -83,6 +83,27 @@ class SecurityTelegramBot {
     this.bot.onText(/\/testalert/, (msg) => {
       commands.handleTestAlert(this.bot, msg);
     });
+
+    // ── Lab commands ────────────────────────────────────────────────────────
+    // /setlimit GD-XXXXXX 30  |  /setlimit GD-XXXXXX unlimited
+    this.bot.onText(/\/setlimit (.+)/, async (msg, match) => {
+      await this._handleSetLimit(msg, match[1].trim());
+    });
+
+    // /users — list recent users
+    this.bot.onText(/\/users/, async (msg) => {
+      await this._handleUsers(msg);
+    });
+
+    // /userinfo GD-XXXXXX
+    this.bot.onText(/\/userinfo (.+)/, async (msg, match) => {
+      await this._handleUserInfo(msg, match[1].trim());
+    });
+
+    // /labreset GD-XXXXXX — reset daily usage
+    this.bot.onText(/\/labreset (.+)/, async (msg, match) => {
+      await this._handleLabReset(msg, match[1].trim());
+    });
   }
   
   setupEventHandlers() {
@@ -291,6 +312,104 @@ Type /help for available commands
       this.isRunning = false;
       console.log('Telegram bot stopped');
     }
+  }
+
+  // ── Lab command handlers ────────────────────────────────────────────────────
+  async _callServerAPI(endpoint, method = 'GET', body = null) {
+    try {
+      const serverUrl = process.env.SERVER_URL || 'http://localhost:5000';
+      const secret = process.env.MONITORING_SECRET || 'genz-monitor-secret-2024';
+      const opts = {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-monitor-secret': secret,
+        },
+        signal: AbortSignal.timeout(8000),
+      };
+      if (body) opts.body = JSON.stringify(body);
+      const res = await fetch(serverUrl + endpoint, opts);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        return { error: err.error || `HTTP ${res.status}` };
+      }
+      return await res.json();
+    } catch (e) {
+      return { error: e.message };
+    }
+  }
+
+  async _handleSetLimit(msg, input) {
+    const chatId = msg.chat.id;
+    const parts = input.split(/\s+/);
+    const userId = parts[0];
+    const val    = parts[1];
+
+    if (!userId || !val) {
+      return this.bot.sendMessage(chatId,
+        '❌ *Usage:*\n`/setlimit GD-XXXXXX 30`\n`/setlimit GD-XXXXXX unlimited`',
+        { parse_mode: 'Markdown' });
+    }
+
+    const unlimited = val === 'unlimited';
+    const limit     = parseInt(val);
+
+    if (!unlimited && isNaN(limit)) {
+      return this.bot.sendMessage(chatId, '❌ Invalid value. Use number or "unlimited"');
+    }
+
+    const data = await this._callServerAPI(`/api/auth/monitor/lab-limit/${userId}`, 'PUT', { limit, unlimited });
+    if (data.error || !data.success) {
+      return this.bot.sendMessage(chatId, `❌ ${data.error || 'User not found'}`, { parse_mode: 'Markdown' });
+    }
+
+    const lab = data.data?.lab || {};
+    this.bot.sendMessage(chatId,
+      `✅ *Lab limit updated*\n🆔 \`${userId}\`\n🔢 ${lab.unlimited ? '♾ UNLIMITED' : lab.limit + ' runs/day'}`,
+      { parse_mode: 'Markdown' });
+  }
+
+  async _handleUsers(msg) {
+    const chatId = msg.chat.id;
+    const data = await this._callServerAPI('/api/auth/monitor/users');
+    if (data.error || !data.success) {
+      return this.bot.sendMessage(chatId, `⚠️ Cannot fetch users: ${data.error || 'Server error'}`);
+    }
+    const users = (data.data || []).slice(0, 10);
+    if (!users.length) return this.bot.sendMessage(chatId, 'No users found');
+    const text = '*Recent Users (10):*\n\n' + users.map(u =>
+      `👤 *${u.name}* \`${u.userId}\`\n📧 ${u.email}\n🔢 ${u.lab?.unlimited ? '♾' : (u.lab?.used||0) + '/' + (u.lab?.limit||15)}`
+    ).join('\n\n');
+    this.bot.sendMessage(chatId, text, { parse_mode: 'Markdown' });
+  }
+
+  async _handleUserInfo(msg, userId) {
+    const chatId = msg.chat.id;
+    const data = await this._callServerAPI('/api/auth/monitor/users');
+    if (data.error || !data.success) {
+      return this.bot.sendMessage(chatId, `⚠️ Cannot fetch user: ${data.error}`);
+    }
+    const user = (data.data || []).find(u => u.userId === userId);
+    if (!user) return this.bot.sendMessage(chatId, `❌ User \`${userId}\` not found`, { parse_mode: 'Markdown' });
+    const text =
+      `👤 *${user.name}*\n` +
+      `🆔 \`${user.userId}\`\n` +
+      `📧 ${user.email}\n` +
+      `🎭 Role: ${user.role}\n` +
+      `🔢 Lab: ${user.lab?.unlimited ? '♾ Unlimited' : (user.lab?.used||0) + '/' + (user.lab?.limit||15) + '/day'}\n` +
+      `📅 Joined: ${new Date(user.createdAt).toLocaleDateString()}`;
+    this.bot.sendMessage(chatId, text, { parse_mode: 'Markdown' });
+  }
+
+  async _handleLabReset(msg, userId) {
+    const chatId = msg.chat.id;
+    const data = await this._callServerAPI(`/api/auth/monitor/lab-reset/${userId}`, 'POST');
+    if (data.error || !data.success) {
+      return this.bot.sendMessage(chatId, `❌ ${data.error || 'User not found'}`);
+    }
+    this.bot.sendMessage(chatId,
+      `✅ *Lab usage reset*\n🆔 \`${userId}\`\nUsed: 0/${data.data?.lab?.limit||15}`,
+      { parse_mode: 'Markdown' });
   }
 }
 

@@ -95,62 +95,40 @@ const detectSQLInjection = async (req, res, next) => {
   let detected = false;
   let payload = null;
   
-  const checkValue = (value, path = '') => {
+  const checkValue = (value) => {
     if (typeof value === 'string') {
       const patterns = [
         /(\b(select|insert|update|delete|drop|union|exec|execute)\b)/i,
         /(';|--|\bOR\b.*=.*\bOR\b)/i,
         /(\|\||&&|;\s*$)/
       ];
-      
       for (const pattern of patterns) {
-        if (pattern.test(value)) {
-          detected = true;
-          payload = value;
-          return true;
-        }
+        if (pattern.test(value)) { detected = true; payload = value; return true; }
       }
     } else if (typeof value === 'object' && value !== null) {
-      for (const key in value) {
-        if (checkValue(value[key], `${path}.${key}`)) {
-          return true;
-        }
-      }
+      for (const key in value) { if (checkValue(value[key])) return true; }
     }
     return false;
   };
   
-  for (const source of sources) {
-    if (checkValue(source)) {
-      break;
-    }
-  }
+  for (const source of sources) { if (checkValue(source)) break; }
   
   if (detected) {
-    await threatDetector.detectSecurityEvent({
-      type: 'SQL_INJECTION',
-      severity: 'CRITICAL',
-      ip: req.ip,
-      path: req.path,
-      method: req.method,
-      payload: payload,
-      userAgent: req.get('user-agent'),
-      description: `SQL Injection attempt detected from ${req.ip}`,
-      metadata: { 
-        payload: payload,
+    try {
+      await threatDetector.detectSecurityEvent({
+        type: 'SQL_INJECTION_ATTEMPT',
+        severity: 'CRITICAL',
+        ip: req.ip,
         path: req.path,
-        query: req.query,
-        body: req.body
-      }
-    });
-    
-    return res.status(403).json({
-      success: false,
-      error: 'Invalid request detected',
-      message: 'Your request has been blocked for security reasons'
-    });
+        method: req.method,
+        payload,
+        userAgent: req.get('user-agent'),
+        description: `SQL Injection attempt detected from ${req.ip}`,
+        metadata: { payload, path: req.path }
+      });
+    } catch {}
+    return res.status(403).json({ success: false, error: 'Invalid request detected' });
   }
-  
   next();
 };
 
@@ -163,60 +141,36 @@ const detectXSS = async (req, res, next) => {
   const checkValue = (value) => {
     if (typeof value === 'string') {
       const patterns = [
-        /<script/i,
-        /javascript:/i,
-        /onerror=/i,
-        /onload=/i,
-        /eval\(/i,
-        /alert\(/i,
-        /document\./i,
-        /<iframe/i,
-        /<embed/i,
-        /<object/i
+        /<script/i, /javascript:/i, /onerror=/i, /onload=/i,
+        /<iframe/i, /<embed/i, /<object/i
       ];
-      
       for (const pattern of patterns) {
-        if (pattern.test(value)) {
-          detected = true;
-          payload = value;
-          return true;
-        }
+        if (pattern.test(value)) { detected = true; payload = value; return true; }
       }
     } else if (typeof value === 'object' && value !== null) {
-      for (const key in value) {
-        if (checkValue(value[key])) {
-          return true;
-        }
-      }
+      for (const key in value) { if (checkValue(value[key])) return true; }
     }
     return false;
   };
   
-  for (const source of sources) {
-    if (checkValue(source)) {
-      break;
-    }
-  }
+  for (const source of sources) { if (checkValue(source)) break; }
   
   if (detected) {
-    await threatDetector.detectSecurityEvent({
-      type: 'XSS_ATTACK',
-      severity: 'HIGH',
-      ip: req.ip,
-      path: req.path,
-      method: req.method,
-      payload: payload,
-      userAgent: req.get('user-agent'),
-      description: `XSS attack attempt detected from ${req.ip}`,
-      metadata: { payload: payload }
-    });
-    
-    return res.status(403).json({
-      success: false,
-      error: 'Invalid request detected'
-    });
+    try {
+      await threatDetector.detectSecurityEvent({
+        type: 'XSS_ATTEMPT',
+        severity: 'HIGH',
+        ip: req.ip,
+        path: req.path,
+        method: req.method,
+        payload,
+        userAgent: req.get('user-agent'),
+        description: `XSS attempt detected from ${req.ip}`,
+        metadata: { payload }
+      });
+    } catch {}
+    return res.status(403).json({ success: false, error: 'Invalid request detected' });
   }
-  
   next();
 };
 

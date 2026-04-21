@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Users, Trophy, Sparkles, Zap, GraduationCap, Code2, Star, Rocket, Music2, VolumeX, Volume2, Pause, Play, SkipForward, SkipBack, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { lessons } from "@/data/lessons";
-import LessonCard from "@/components/LessonCard";
+import LessonGrid from "@/components/LessonGrid";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import PageTransition from "@/components/PageTransition";
-import TypingEffect from "@/components/TypingEffect";
 
 const stats = [
   { icon: BookOpen, label: "\u1798\u17C1\u179A\u17C0\u1793\u179F\u179A\u179F\u17C1\u179A\u1780\u17BC\u178A", value: "20+", color: "from-primary to-primary-glow" },
@@ -384,7 +382,6 @@ const SoundButton = () => {
 };
 
 const Index = () => {
-  const featured = lessons.slice(0, 6);
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -531,7 +528,7 @@ const Index = () => {
         <section id="featured" className="py-28 relative">
           <div className="absolute inset-0 mesh-gradient opacity-40" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-20">
+            <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -539,25 +536,23 @@ const Index = () => {
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm font-semibold text-primary mb-6"
               >
                 <Code2 className="h-3.5 w-3.5" />
-                {"\u1798\u17C1\u179A\u17C0\u1793\u1796\u17C1\u1789\u1793\u17B7\u1799\u1798"}
+                {"មេរៀនពេញនិយម"}
               </motion.div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black mb-5">
-                {"\u1785\u17B6\u1794\u17CB\u1795\u17D2\u178A\u17BE\u1798\u178A\u17C6\u178E\u17BE\u179A\u179A\u17C0\u1793"}
+                {"ចាប់ផ្ដើមដំណើររៀន"}
               </h2>
               <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-                {"\u1787\u17D2\u179A\u17BE\u179F\u179A\u17BE\u179F\u1798\u17C1\u179A\u17C0\u1793\u1797\u17B6\u179F\u17B6\u1780\u17BC\u178A\u178A\u17C2\u179B\u1796\u17C1\u1789\u1793\u17B7\u1799\u1798\u1794\u17C6\u1795\u17BB\u178F"}
+                {"ជ្រើសរើសមេរៀនភាសាកូដដែលពេញនិយមបំផុត"}
               </p>
             </motion.div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featured.map((lesson, i) => (
-                <LessonCard key={lesson.id} lesson={lesson} index={i} />
-              ))}
-            </div>
+
+            <LessonGrid />
+
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mt-16">
               <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.97 }}>
                 <Button asChild variant="outline" size="lg" className="gap-2.5 rounded-2xl text-base px-10 h-14 glass border-border/50 hover:border-primary/30">
                   <Link to="/lessons">
-                    {"\u1798\u17BE\u179B\u1798\u17C1\u179A\u17C0\u1793\u1791\u17B6\u17C6\u1784\u17A2\u179F\u17CB"} <ArrowRight className="h-4 w-4" />
+                    {"មើលមេរៀនទាំងអស់"} <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
               </motion.div>

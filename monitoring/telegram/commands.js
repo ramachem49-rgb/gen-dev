@@ -85,48 +85,29 @@ For emergencies, contact system administrator immediately.
     const helpMessage = `
 📚 <b>Command Reference Guide</b>
 
-<b>/status</b>
-Shows bot status, uptime, and current security posture.
+<b>🛡️ Security Commands:</b>
+/status — Bot status & system health
+/stats — Attack statistics
+/block &lt;IP&gt; [reason] — Block IP
+/unblock &lt;IP&gt; — Unblock IP
+/whitelist &lt;IP&gt; — Whitelist IP
+/report — Security report
+/testalert — Test notification
 
-<b>/stats</b>
-Displays attack statistics including:
-- Total attacks detected
-- Attacks by type (DDoS, SQLi, Scanner, etc.)
-- Top attacking IPs
-- Severity breakdown
+<b>🧪 Lab Commands:</b>
+/users — List recent 10 users
+/userinfo GD-XXXX — User details
+/setlimit GD-XXXX 30 — Set 30 runs/day
+/setlimit GD-XXXX unlimited — Remove limit
+/labreset GD-XXXX — Reset daily usage
 
-<b>/block &lt;IP&gt; [reason]</b>
-Example: <code>/block 192.168.1.100 Brute force attack</code>
-Blocks an IP address and logs the reason.
-
-<b>/unblock &lt;IP&gt;</b>
-Example: <code>/unblock 192.168.1.100</code>
-Removes IP from blocklist.
-
-<b>/whitelist &lt;IP&gt;</b>
-Example: <code>/whitelist 10.0.0.1</code>
-Adds IP to whitelist (bypasses security checks).
-
-<b>/report</b>
-Generates comprehensive security report including:
-- Attack trends
-- Top threats
-- System health
-- Recommendations
-
-<b>/testalert</b>
-Sends a test alert to verify notification system.
-
-<b>⚠️ Important Notes:</b>
-• Blocked IPs are automatically saved
-• Whitelisted IPs bypass all security checks
-• Reports are saved in /monitoring/logs/
-• All actions are logged for audit
+<b>💡 Examples:</b>
+<code>/setlimit GD-A1B2C3 50</code>
+<code>/setlimit GD-A1B2C3 unlimited</code>
+<code>/userinfo GD-A1B2C3</code>
+<code>/labreset GD-A1B2C3</code>
     `;
-    
-    await bot.sendMessage(chatId, helpMessage, {
-      parse_mode: 'HTML'
-    });
+    await bot.sendMessage(chatId, helpMessage, { parse_mode: 'HTML' });
   }
   
   async handleStatus(bot, msg) {

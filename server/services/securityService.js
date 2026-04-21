@@ -7,7 +7,8 @@ const Alert = require('../models/Alert');
 // Update telegram service path
 const telegramService = require('./telegramService');
 
-// Rest of the code remains the same...
+let geoip;
+try { geoip = require('geoip-lite'); } catch { geoip = { lookup: () => null }; }
 
 class SecurityService {
   constructor() {
@@ -54,8 +55,17 @@ class SecurityService {
     }
   }
 
-  // Detect and log security event
+  // Detect and log security event — never throws, always safe to call from middleware
   async detectSecurityEvent(eventData) {
+    try {
+      return await this._detectSecurityEvent(eventData);
+    } catch (err) {
+      console.error('SecurityService.detectSecurityEvent error:', err.message);
+      return null;
+    }
+  }
+
+  async _detectSecurityEvent(eventData) {
     const {
       type,
       severity = 'WARNING',
